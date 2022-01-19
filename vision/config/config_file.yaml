@@ -1,0 +1,11 @@
+[readable]
+cv_imshow_title = Object Detection Tools for Yolov3, Yolov4, Yolov5
+video_true_webcam_false = True
+video_screenshots_path_folder = /screenshoots/
+video_save_path_folder = /outputs/
+video_path_file = /videos/robloxapp.wmv
+selected_class_id = 0
+
+
+[changeable]
+last_frame = 0
