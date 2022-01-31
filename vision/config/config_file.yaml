@@ -1,11 +1,13 @@
 [readable]
 cv_imshow_title = Object Detection Tools for Yolov3, Yolov4, Yolov5
+camera_type = webcam  #"hd": {"width": 1920, "height": 1080}, "webcam": {"width": 1280, "height": 960}
 video_true_webcam_false = True
-video_screenshots_path_folder = /screenshoots/
-video_save_path_folder = /outputs/
-video_path_file = /videos/robloxapp.wmv
+video_screenshots_path_folder = /_screenshoots/
+video_save_path_folder = /_outputs/
+video_path_file = /_videos/robloxapp.mp4
 selected_class_id = 0
-
+split_percentage_valid = 10
 
 [changeable]
-last_frame = 0
+last_frame = 279
+

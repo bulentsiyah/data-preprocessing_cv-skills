@@ -5,8 +5,9 @@
 ## How does it work?
 
 ## What to do next:
-- [ ] Make it compatible in yolov4 and yolo5
-- [ ] Make it outputable within the SSD architecture
+- [x] splıt kodunu ekle
+- [ ] her durumda class.txt en buyuk class ıd gore yazılsın
+- [ ] analız kodu ve analız ıpyton dosyası uzerınde dene
 
 
 ## Who am I?
@@ -16,7 +17,6 @@
 >
 >My skills; Image classification, Image Segmentation, Object Detection, Object Recognition, Object Tracking, Pose Estimation, Pattern Recognition, Autonomous Vehicles
 >
->You can access my work on my website  . You can review the source codes of all my work from my   [Kaggle](https://www.kaggle.com/bulentsiyah) and [Github](https://github.com/bulentsiyah?tab=repositories) profiles.
+>You can access my work on my website  [www.bulentsiyah.com](www.bulentsiyah.com). You can review the source codes of all my work from my   [Kaggle](https://www.kaggle.com/bulentsiyah) and [Github](https://github.com/bulentsiyah?tab=repositories) profiles.
 >
 > #ComputerVision #DeepLearning
-

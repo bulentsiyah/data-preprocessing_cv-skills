@@ -31,7 +31,7 @@ class ConfigurationManager:
         config_changeable = config_f1['changeable']
         return config_readable, config_changeable
 
-    def set_lastframe(self, last_frame):
+    def set_last_frame(self, last_frame):
         """
         Parameters
         ------------
@@ -49,6 +49,6 @@ class ConfigurationManager:
         try:
             with open(path_of_the_config_yaml, "w+") as configfile:
                 parser.write(configfile)
-                return True
+            return True
         except:
             return False
