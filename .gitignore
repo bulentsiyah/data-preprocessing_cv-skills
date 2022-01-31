@@ -1,3 +1,13 @@
+# exclude everything
+vision/_screenshots/*
+vision/_videos/*
+vision/_outputs/*
+
+# exception to the rule
+!deep/_screenshots/.gitkeep
+!deep/_videos/.gitkeep
+!deep/_outputs/.gitkeep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
