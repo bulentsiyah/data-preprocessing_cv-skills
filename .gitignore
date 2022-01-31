@@ -4,9 +4,9 @@ vision/_videos/*
 vision/_outputs/*
 
 # exception to the rule
-!deep/_screenshots/.gitkeep
-!deep/_videos/.gitkeep
-!deep/_outputs/.gitkeep
+!vision/_screenshots/.gitkeep
+!vision/_videos/.gitkeep
+!vision/_outputs/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
