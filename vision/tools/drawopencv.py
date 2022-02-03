@@ -6,7 +6,7 @@ from pathlib import Path
 
 class DrawingOpencv:
     """
-    Tüm ekrana çizim işlemlerinin yapıldığı sınıftır.
+    Tum ekrana cizim islemlerinin yapildigi siniftir.
     """
 
     line_thick = 0.65
@@ -25,11 +25,11 @@ class DrawingOpencv:
         Parameters
         -----------
         frame: image - o anki frame
-        selected_class: integer - seçili sınıfın labeli
+        selected_class: integer - secili sinifin labeli
 
         Returns
         -----------
-        None: geri dönüşe gerek yok gelen frame üzerine yazılıyor
+        None: geri donuse gerek yok gelen frame uzerine yaziliyor
         """
 
         ttemp_y = 3
@@ -53,12 +53,12 @@ class DrawingOpencv:
         Parameters
         -----------
         frame:image - o anki frame
-        frame_number: integer - o anki bulunan frame sayısı
+        frame_number: integer - o anki bulunan frame sayisi
         frame_fps: integer -
 
         Returns
         -----------
-        None: geri dönüşe gerek yok gelen frame üzerine yazılıyor. 
+        None: geri donuse gerek yok gelen frame üzerine yaziliyor. 
         """
 
         time_stamp = "frame number: "+str(frame_number)
@@ -83,12 +83,12 @@ class DrawingOpencv:
         -----------
         frame:image - o anki frame
         class_id: integer -
-        x1_y1: tuple - sol ust koordinat değerleri
-        x2_y2: tuple - sağ alt koordinat değerleri
+        x1_y1: tuple - sol ust koordinat degerleri
+        x2_y2: tuple - sag alt koordinat degerleri
 
         Returns
         -----------
-        None: geri dönüşe gerek yok gelen frame üzerine yazılıyor.
+        None: geri donuse gerek yok gelen frame üzerine yaziliyor.
         """
 
         x1_y1_text_padding = (x1_y1[0], x1_y1[1]-5)
@@ -101,11 +101,11 @@ class DrawingOpencv:
         Parameters
         -----------
         frame:image - o anki frame
-        string_text: string - yazılması istenilen text
+        string_text: string - yazilmasi istenilen text
 
         Returns
         -----------
-        None: geri dönüşe gerek yok gelen frame üzerine yazılıyor.
+        None: geri donuse gerek yok gelen frame uzerine yaziliyor.
         """
         
         cv2.putText(frame, string_text, (10, 50), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.6, DrawingOpencv.color_red, 2)

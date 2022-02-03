@@ -36,7 +36,6 @@ class VideoCapture:
         self.camera_parameters = CameraParameters("webcam")
 
         self.class_id = int(self.cfg.config_readable['selected_class_id'])
-
         video_true_webcam_false = eval(self.cfg.config_readable['video_true_webcam_false'])
 
         if video_true_webcam_false:
@@ -84,17 +83,15 @@ class VideoCapture:
         parent_dir = os.path.dirname(sys.argv[0] + self.cfg.config_readable['video_save_path_folder'])
         path = os.path.join(parent_dir, directory)
 
-        if os.path.exists(path)==False:
+        
+        try:
+            self.frame_number = int(self.cfg.config_changeable['last_frame'])
+            print("last_frame_videocapture", self.frame_number)
+            self.video_capture.set(cv2.CAP_PROP_POS_FRAMES, self.frame_number)
+            #print(latest_file)
+        except:
+            print("exception_videocapture_init")
             pass
-        else:
-            #list_of_files = glob.glob(path+'/*.png') # means all if need specific format then *.png
-
-            try:
-                self.frame_number = int(self.cfg.config_changeable['last_frame'])
-                self.video_capture.set(cv2.CAP_PROP_POS_FRAMES, self.frame_number)
-                #print(latest_file)
-            except:
-                pass
 
 
     def save_pure_frame_save(self, frame):

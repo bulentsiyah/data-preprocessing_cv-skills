@@ -1,6 +1,6 @@
 class CameraParameters:
     """
-    Kamerların özelliklerinin tanımlandığı kısımdır.
+    Kameralarin ozelliklerinin tanimlandigi kisimdir.
     """
 
     def __init__(self, camera_type='webcam'):

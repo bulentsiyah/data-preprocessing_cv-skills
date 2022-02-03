@@ -6,7 +6,7 @@ import sys
 
 class ConfigurationManager:
     """
-    Projeye ait tüm ilk ayarların yazılı olduğu config_file.yaml dosyasını okuma ve bazı parametrelerini değiştirmek için yaratılan sınıftır.
+    Projeye ait tüm ilk ayarlarin yazili oldugu config_file.yaml dosyasini okuma ve bazi parametrelerini degistirmek icin yaratilan siniftir.
     """
 
     def __init__(self):
@@ -20,8 +20,8 @@ class ConfigurationManager:
 
         Returns
         ------------
-        config_readable : configparser - config okunabilir bloğu
-        config_changeable : configparser - config değiştirilebilir bloğu
+        config_readable : configparser - config okunabilir blogu
+        config_changeable : configparser - config degistirilebilir blogu
         """
 
         path_of_the_config_yaml = os.path.dirname(sys.argv[0]) + '/config/config_file.yaml'
@@ -35,17 +35,66 @@ class ConfigurationManager:
         """
         Parameters
         ------------
-        last_frame: string - üzerinde çalışılan en son frame numarası
+        last_frame: string - üzerinde calisilan en son frame numarasi
         
         Returns
         ------------
-        rtn: Boolean - config verinin yazılma durumu
+        rtn: Boolean - config verinin yazilma durumu
+        """
+
+        
+        path_of_the_config_yaml = os.path.dirname(sys.argv[0]) + '/config/config_file.yaml'
+
+        parser = configparser.ConfigParser()
+        parser.read(path_of_the_config_yaml)
+        parser.set('changeable', 'last_frame', str(last_frame))
+        try:
+            with open(path_of_the_config_yaml, "w+") as configfile:
+                parser.write(configfile)
+            return True
+
+        except:
+            # TODO: isin bitince sil
+            print("set_last_frame exception")
+            return False
+
+    def set_selected_id(self, selected_id):
+        """
+        Parameters
+        ------------
+        selected_id: string - 
+        
+        Returns
+        ------------
+        rtn: Boolean - config verinin yazilma durumu
         """
 
         path_of_the_config_yaml = os.path.dirname(sys.argv[0]) + '/config/config_file.yaml'
         parser = configparser.ConfigParser()
         parser.read(path_of_the_config_yaml)
-        parser.set('changeable', 'last_frame', str(last_frame))
+        parser.set('readable', 'selected_class_id', str(selected_id))
+        try:
+            with open(path_of_the_config_yaml, "w+") as configfile:
+                parser.write(configfile)
+            return True
+        except:
+            return False
+
+    
+    def set_split_percentage_valid(self, split_percentage_valid):
+        """
+        Parameters
+        -----------
+        split_percentage_valid: int
+
+        Returns
+        -----------
+        rtn: Boolean - config verinin yazilma durumu
+        """
+        path_of_the_config_yaml = os.path.dirname(sys.argv[0]) + '/config/config_file.yaml'
+        parser = configparser.ConfigParser()
+        parser.read(path_of_the_config_yaml)
+        parser.set('changeable', 'split_percentage_valid', str(split_percentage_valid))
         try:
             with open(path_of_the_config_yaml, "w+") as configfile:
                 parser.write(configfile)
