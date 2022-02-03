@@ -214,13 +214,13 @@ class SingleObjectTracking:
                 except:
                     pass
         
-        if selected_class_id > last_class_id:
-            last_class_id = selected_class_id
-        for class_id in range(0, last_class_id + 1):
-            if class_id != last_class_id:
-                outfile.write(str(class_id)+"\n")
-            else:
-                outfile.write(str(class_id))
+            if selected_class_id > last_class_id:
+                last_class_id = selected_class_id
+            for class_id in range(0, last_class_id+1):
+                if class_id != last_class_id:
+                    outfile.write(str(class_id)+"\n")
+                else:
+                    outfile.write(str(class_id))
 
         # End Region
 

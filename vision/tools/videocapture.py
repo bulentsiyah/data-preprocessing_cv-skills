@@ -86,7 +86,6 @@ class VideoCapture:
         
         try:
             self.frame_number = int(self.cfg.config_changeable['last_frame'])
-            print("last_frame_videocapture", self.frame_number)
             self.video_capture.set(cv2.CAP_PROP_POS_FRAMES, self.frame_number)
             #print(latest_file)
         except:

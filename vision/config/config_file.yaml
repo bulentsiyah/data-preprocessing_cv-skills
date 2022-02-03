@@ -4,9 +4,9 @@ video_true_webcam_false = True
 video_screenshots_path_folder = /_screenshoots/
 video_save_path_folder = /_outputs/
 video_path_file = /_videos/robloxapp.wmv
-selected_class_id = 4
-
+selected_class_id = 6
 
 [changeable]
-last_frame = 287
-split_percentage_valid = 10
+last_frame = 187
+split_percentage_valid = 20
+
