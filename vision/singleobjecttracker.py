@@ -24,7 +24,9 @@ class TrackerTypes(Enum):
 
 class SingleObjectTracking:
     """
-    Tracking yapıldığı sınıftır.
+    Tracking yapildigi siniftir.
+    Etiketlenen framelerin ve txtlerin yazildigi kisimdir.
+    classes.txt bu sinifta yaratilir ve kontrol edilir.
     """
 
     def __init__(self, tracker_type=TrackerTypes.KCF.name, video_id="none_name"):
@@ -32,7 +34,7 @@ class SingleObjectTracking:
         Parameters
         -----------
         tracker_type: Enum -
-        video_id: string - seçili videonun dosya adı
+        video_id: string - secili videonun dosya adi
 
         Returns
         -----------
@@ -94,7 +96,7 @@ class SingleObjectTracking:
         if box_selected is not None:
             tracker_state = self.tracker.init(frame, box_selected)
 
-    def update_frame(self, frame, frame_orj, frame_number):
+    def update_frame(self, frame, frame_orj, frame_number, selected_class_id):
         """
         Parameters
         -----------
@@ -132,8 +134,8 @@ class SingleObjectTracking:
             DrawingOpencv.drawing_rectangle(frame=frame, class_id=self.class_id, x1_y1=(x, y), x2_y2=(x + w, y + h), color=DrawingOpencv.color_green)
             #cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
             box_image = org_frame[y:y + h, x:x + w]
-            self.yolo_format(box=box, frame=org_frame, frame_number=frame_number)
-            #cv2.imshow("en sonki takip edebildiği box_image", cv2.cvtColor(box_image, cv2.COLOR_RGB2BGR))
+            self.yolo_format(box=box, frame=org_frame, frame_number=frame_number, selected_class_id=selected_class_id)
+            #cv2.imshow("en sonki takip edebildigi box_image", cv2.cvtColor(box_image, cv2.COLOR_RGB2BGR))
             #if self.last_success_boxes is None:
             self.last_success_boxes=box_image
             #cv2.imshow("self.last_success_boxes", cv2.cvtColor(self.last_success_boxes, cv2.COLOR_RGB2BGR))
@@ -142,13 +144,14 @@ class SingleObjectTracking:
             return False
 
         
-    def yolo_format(self, box, frame, frame_number):
+    def yolo_format(self, box, frame, frame_number, selected_class_id):
         """
         Parameters
         -----------
         frame: image
         box: tuple - (x, y, w, h)
         frame_number: int -
+        selected_class_id: int -
 
         Returns
         -----------
@@ -194,6 +197,32 @@ class SingleObjectTracking:
                     pass
 
             outfile.write(yolo_line+"\n")
+
+
+        # Region classes.txt'nin yazildigi ve duzenlendigi yer       
+        text_name = path + "/" + "classes.txt"
+        if os.path.exists(text_name)==False:
+            file = open(text_name, 'w')
+            file.close()
+        
+        infile = open(text_name, 'r').readlines()
+        with open(text_name, 'w') as outfile:
+            last_class_id = -1
+            for index,line in enumerate(infile):
+                try:
+                    last_class_id = int(line)
+                except:
+                    pass
+        
+        if selected_class_id > last_class_id:
+            last_class_id = selected_class_id
+        for class_id in range(0, last_class_id + 1):
+            if class_id != last_class_id:
+                outfile.write(str(class_id)+"\n")
+            else:
+                outfile.write(str(class_id))
+
+        # End Region
 
 
         self.configurationManager.set_last_frame(last_frame=frame_number)
