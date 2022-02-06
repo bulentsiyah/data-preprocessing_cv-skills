@@ -7,7 +7,7 @@
 ## What to do next:
 - [x] splıt kodunu ekle
 - [x] her durumda class.txt en buyuk class ıd gore yazılsın
-- [ ] analız kodu ve analız ıpyton dosyası uzerınde dene
+- [x] analız kodu ve analız ıpyton dosyası uzerınde dene
 
 
 ## Who am I?
