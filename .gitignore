@@ -1,3 +1,13 @@
+# exclude everything
+_screenshots/*
+_videos/*
+_outputs/*
+
+# exception to the rule
+!_screenshots/.gitkeep
+!_videos/.gitkeep
+!_outputs/.gitkeep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
