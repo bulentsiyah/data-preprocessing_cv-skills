@@ -7,7 +7,7 @@ import pandas as pd
 import argparse
 
 import sys 
-sys.path.append('vision/tools')
+sys.path.append('tools')
 from configmanager import ConfigurationManager
 from cameraparameters import CameraParameters
 

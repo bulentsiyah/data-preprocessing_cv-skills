@@ -7,7 +7,7 @@ import numpy as np
 import sys
 import copy
 import sys
-sys.path.append('vision/tools')
+sys.path.append('tools')
 from configmanager import ConfigurationManager
 from drawopencv import DrawingOpencv
 

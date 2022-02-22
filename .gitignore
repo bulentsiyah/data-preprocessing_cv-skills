@@ -1,12 +1,12 @@
 # exclude everything
-vision/_screenshots/*
-vision/_videos/*
-vision/_outputs/*
+_screenshots/*
+_videos/*
+_outputs/*
 
 # exception to the rule
-!vision/_screenshots/.gitkeep
-!vision/_videos/.gitkeep
-!vision/_outputs/.gitkeep
+!_screenshots/.gitkeep
+!_videos/.gitkeep
+!_outputs/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -4,7 +4,7 @@ import argparse
 from pydoc import text
 
 import sys
-sys.path.append('vision/tools')
+sys.path.append('tools')
 from configmanager import ConfigurationManager
 
 class SplitDataset:

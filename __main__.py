@@ -2,7 +2,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 import sys
-sys.path.append('vision/tools')
+sys.path.append('tools')
 from configmanager import ConfigurationManager
 from singleobjecttracker import SingleObjectTracking, TrackerTypes
 from videocapture import VideoCapture
