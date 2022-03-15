@@ -30,7 +30,7 @@ class SplitDataset:
 
         config_percentage_valid = self.configurationManager.config_changeable['split_percentage_valid']
         config_split_type_yolov3_yolov5 = self.configurationManager.config_changeable['split_type_yolov3_yolov5']
-        self.split_max_class_count = self.configurationManager.config_changeable['split_max_class_count']
+        self.split_max_class_count = int(self.configurationManager.config_changeable['split_max_class_count'])
 
         self.parser.add_argument('-p', '--percentage_valid', help='yuzde kac valid icin', default=config_percentage_valid)
         self.parser.add_argument('-t', '--type_yolov3_yolov5', help='dosyalama türü yolov3(0) veya yolov5(1) göre ', default=config_split_type_yolov3_yolov5)
@@ -127,17 +127,19 @@ class SplitDataset:
 
             file_yaml = open(yolo_output_dir+'/custom_'+video_id+'.yaml', 'w')
 
-            file_yaml.write(train_images_yolo_output_dir + "\n")
-            file_yaml.write(val_images_yolo_output_dir + "\n")
+            file_yaml.write("train: "+os.path.join(video_id,"images","train") + "\n")
+            file_yaml.write("val: "+os.path.join(video_id,"images","val") + "\n")
+
+
             file_yaml.write("\n")
             file_yaml.write("\n")
             file_yaml.write("# number of classes"+"\n")
-            file_yaml.write("nc: "+str(self.split_max_class_count))
+            file_yaml.write("nc: "+str(self.split_max_class_count+1))
             file_yaml.write("\n")
             file_yaml.write("\n")
             file_yaml.write("# class names"+ "\n")
             class_name = "names: [ "
-            for i in range(int(self.split_max_class_count)):
+            for i in range(int(self.split_max_class_count)+1):
                 class_name = class_name+"'"+str(i)+"',"
             
             class_name = class_name +" ]"
