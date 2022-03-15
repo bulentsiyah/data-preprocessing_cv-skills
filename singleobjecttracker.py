@@ -222,6 +222,7 @@ class SingleObjectTracking:
                 else:
                     outfile.write(str(class_id))
 
+        self.configurationManager.set_split_max_class_count(split_max_class_count=str(class_id))
         # End Region
 
 

@@ -3,7 +3,6 @@ import os
 import sys
 
 
-
 class ConfigurationManager:
     """
     Projeye ait tüm ilk ayarlarin yazili oldugu config_file.yaml dosyasini okuma ve bazi parametrelerini degistirmek icin yaratilan siniftir.
@@ -80,6 +79,30 @@ class ConfigurationManager:
         except:
             return False
 
+
+
+    def set_split_max_class_count(self, split_max_class_count):
+        """
+        Parameters
+        ------------
+        split_max_class_count: string - 
+        
+        Returns
+        ------------
+        rtn: Boolean - config verinin yazilma durumu
+        """
+
+        path_of_the_config_yaml = os.path.dirname(sys.argv[0]) + '/config/config_file.yaml'
+        parser = configparser.ConfigParser()
+        parser.read(path_of_the_config_yaml)
+        parser.set('changeable', 'split_max_class_count', str(split_max_class_count))
+        try:
+            with open(path_of_the_config_yaml, "w+") as configfile:
+                parser.write(configfile)
+            return True
+        except:
+            return False
+
     
     def set_split_percentage_valid(self, split_percentage_valid):
         """
@@ -95,6 +118,31 @@ class ConfigurationManager:
         parser = configparser.ConfigParser()
         parser.read(path_of_the_config_yaml)
         parser.set('changeable', 'split_percentage_valid', str(split_percentage_valid))
+        try:
+            with open(path_of_the_config_yaml, "w+") as configfile:
+                parser.write(configfile)
+            return True
+        except:
+            return False
+
+
+
+
+    def set_split_type_yolov3_yolov5(self, split_type_yolov3_yolov5=1):
+        """
+        Parameters
+        -----------
+        split_type_yolov3_yolov5: int
+        dosyalama türü yolov3(0) veya yolov5(1) göre
+
+        Returns
+        -----------
+        rtn: Boolean - config verinin yazilma durumu
+        """
+        path_of_the_config_yaml = os.path.dirname(sys.argv[0]) + '/config/config_file.yaml'
+        parser = configparser.ConfigParser()
+        parser.read(path_of_the_config_yaml)
+        parser.set('changeable', 'split_type_yolov3_yolov5', str(split_type_yolov3_yolov5))
         try:
             with open(path_of_the_config_yaml, "w+") as configfile:
                 parser.write(configfile)
