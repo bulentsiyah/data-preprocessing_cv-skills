@@ -1,4 +1,4 @@
-# Semi-labeling tool suitable for YoloV3 format
+# Semi-labeling tool suitable for YoloV3 and YOLOV5 format
 
 ## What is this tool?
 
@@ -6,6 +6,7 @@
 - [x] önce ilk sınıftan toplam sınıfa kadar döngü şeklinde etıketleme yapılır.
 - [x] splitdataset çalıştırıp dataset ayrılır(train-valid).
 - [x] dataanalysis çalıştırılır, oluşan csv dataanalysis_visualization.ipython yorumlanır.
+- [] splitte hem yolov3 hemde yolov5 için dosyalar rastgele seçilmeli
 
 
 ## What to do next:
