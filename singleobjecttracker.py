@@ -64,21 +64,21 @@ class SingleObjectTracking:
         """
 
         if tracker_type == 'BOOSTING':
-            self.tracker = tracker = cv2.TrackerBoosting_create()
+            self.tracker = tracker = cv2.legacy.TrackerBoosting_create()
         if tracker_type == 'MIL':
-            self.tracker = tracker = cv2.TrackerMIL_create()
+            self.tracker = tracker = cv2.legacy.TrackerMIL_create()
         if tracker_type == 'KCF':
-            self.tracker =tracker = cv2.TrackerKCF_create()
+            self.tracker =tracker = cv2.legacy.TrackerKCF_create()
         if tracker_type == 'TLD':
-            self.tracker =tracker = cv2.TrackerTLD_create()
+            self.tracker =tracker = cv2.legacy.TrackerTLD_create()
         if tracker_type == 'MEDIANFLOW':
-            self.tracker =tracker = cv2.TrackerMedianFlow_create()
+            self.tracker =tracker = cv2.legacy.TrackerMedianFlow_create()
         if tracker_type == 'GOTURN':
-            self.tracker =tracker = cv2.TrackerGOTURN_create()
+            self.tracker =tracker = cv2.legacy.TrackerGOTURN_create()
         if tracker_type == 'MOSSE':
-            self.tracker =tracker = cv2.TrackerMOSSE_create()
+            self.tracker =tracker = cv2.legacy.TrackerMOSSE_create()
         if tracker_type == "CSRT":
-            self.tracker = tracker = cv2.TrackerCSRT_create()
+            self.tracker = tracker = cv2.legacy.TrackerCSRT_create()
 
     
     def init_box_selected(self, frame, box_selected=None):
