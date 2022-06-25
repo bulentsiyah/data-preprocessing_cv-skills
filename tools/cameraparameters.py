@@ -3,7 +3,7 @@ class CameraParameters:
     Kameralarin ozelliklerinin tanimlandigi kisimdir.
     """
 
-    def __init__(self, camera_type='webcam'):
+    def __init__(self, camera_type='webcam2'):
         """
         Parameters
         -----------
@@ -32,7 +32,8 @@ class CameraParameters:
         """
 
         list_of_camera = {"hd": {"width": 1920, "height": 1080},
-                         "webcam": {"width": 1280, "height": 960}
+                         "webcam": {"width": 1280, "height": 960},
+                         "webcam2": {"width": 640, "height": 480}
                          }
         if camera_type in list_of_camera.keys():
             return list_of_camera[camera_type]

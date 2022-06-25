@@ -13,7 +13,7 @@ import argparse
 
 def main():
     """
-    İslemin basladigi ana siniftir.
+    İslemin basladigi ana siniftir.                  
     """
    
 

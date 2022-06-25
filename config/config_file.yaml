@@ -3,12 +3,12 @@ cv_imshow_title = Object Detection Tools for Yolov3 and Yolov5
 video_true_webcam_false = True
 video_screenshots_path_folder = /_screenshoots/
 video_save_path_folder = /_outputs/
-video_path_file = /_videos/dji_port_1dk.mp4
-selected_class_id = 1
+video_path_file = /_videos/hepsi_t.mp4
+selected_class_id = 0
 
 [changeable]
-last_frame = 8
+last_frame = 0
 split_percentage_valid = 20
 split_type_yolov3_yolov5 = 1
-split_max_class_count = 1
+split_max_class_count = 4
 
