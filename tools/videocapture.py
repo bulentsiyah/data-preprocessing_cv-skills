@@ -33,7 +33,7 @@ class VideoCapture:
         self.cfg = ConfigurationManager()
         self.drawopencv = DrawingOpencv()
 
-        self.camera_parameters = CameraParameters("webcam2")
+        self.camera_parameters = CameraParameters("video_airbus")
 
         self.class_id = int(self.cfg.config_readable['selected_class_id'])
         video_true_webcam_false = eval(self.cfg.config_readable['video_true_webcam_false'])
