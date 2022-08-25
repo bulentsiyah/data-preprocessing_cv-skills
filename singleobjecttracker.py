@@ -171,7 +171,7 @@ class SingleObjectTracking:
         yolo_w = format(w/width, '.6f')
         yolo_h = format(h/height, '.6f')
 
-        yolo_line = '{0} {1} {2} {3} {4}'.format(self.class_id, yolo_x, yolo_y, yolo_w, yolo_h)
+        yolo_line = '{0} {1} {2} {3} {4}'.format(selected_class_id, yolo_x, yolo_y, yolo_w, yolo_h)
 
         directory = self.video_id
         parent_dir = os.path.dirname(sys.argv[0]) + self.configurationManager.config_readable['video_save_path_folder']

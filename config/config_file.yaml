@@ -4,10 +4,13 @@ video_true_webcam_false = True
 video_screenshots_path_folder = /_screenshoots/
 video_save_path_folder = /_outputs/
 video_path_file = /_videos/output_landing_pure_false_Trim.avi
-selected_class_id = 5
+selected_class_id = 1
+labeling_true_modelpredciton_false = False
+model_main_yolov5 = ../yolov5
+model_yolo_v5_weight_filename = ../data-annotation-tools-for-yolo/_models/yolov5_demo_agust22/Demo_August_Port10.pt
 
 [changeable]
-last_frame = 911
+last_frame = 926
 split_percentage_valid = 20
 split_type_yolov3_yolov5 = 1
 split_max_class_count = 5
