@@ -54,8 +54,8 @@ class VideoCapture:
         self.id = os.path.splitext(os.path.basename(video_path))[0]
 
         self.resizing = True
-        self.new_width = 0
-        self.new_height = 0
+        self.new_width = int(self.video_capture.get(3))
+        self.new_height = int(self.video_capture.get(4))
 
         self.selecetROI = False
         self.box = None
