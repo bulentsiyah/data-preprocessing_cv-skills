@@ -22,6 +22,8 @@ def main():
         model_pred_for_labeling = ModelPredForLabeling(video_id=video_capture.id)
         video_capture.selecetROI = True
 
+    
+
     while True:
         
         video_capture.get_image()

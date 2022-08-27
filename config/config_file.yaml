@@ -3,14 +3,14 @@ cv_imshow_title = Object Detection Tools for Yolov3 and Yolov5
 video_true_webcam_false = True
 video_screenshots_path_folder = /_screenshoots/
 video_save_path_folder = /_outputs/
-video_path_file = /_videos/output_landing_pure_false_Trim.avi
-selected_class_id = 1
+video_path_file = /_videos/all_17-18-19_port_pas_23hataliport_.mp4
+selected_class_id = 0
 labeling_true_modelpredciton_false = False
 model_main_yolov5 = ../yolov5
 model_yolo_v5_weight_filename = ../data-annotation-tools-for-yolo/_models/yolov5_demo_agust22/Demo_August_Port10.pt
 
 [changeable]
-last_frame = 926
+last_frame = 1096
 split_percentage_valid = 20
 split_type_yolov3_yolov5 = 1
 split_max_class_count = 5
