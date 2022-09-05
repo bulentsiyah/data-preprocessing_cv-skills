@@ -5,9 +5,13 @@ from drawopencv import DrawingOpencv
 from singleobjecttracker import SingleObjectTracking
 
 import numpy as np
+import pandas as pd
 
 import torch
 import cv2
+import os
+import datetime
+import time
 
 sys.path.append('../')
 from deep_sort_realtime.deepsort_tracker import DeepSort
@@ -37,10 +41,18 @@ class ModelPredForLabeling:
         self.single_object_tracking = SingleObjectTracking(video_id=self.video_id)
 
         self.deepsort=False
-
+    
         if self.deepsort:
             self.tracker = DeepSort(max_age=10)
             self.colors_tracker = np.random.uniform(0, 255, size=(255, 3))
+
+        self.data_collection_for_distance = True
+
+        if self.data_collection_for_distance:
+            self.data_frame_data_collection_for_distance = pd.DataFrame()
+            parent_dir = os.path.dirname(sys.argv[0]) + self.configurationManager.config_readable['video_save_path_folder']
+            self.path_distance_csv = os.path.join(parent_dir,  datetime.datetime.fromtimestamp(time.time()).strftime("%d-%m-%Y-%H-%M-%S")+".csv")
+            
 
     def pred_labeling(self, frame, frame_orj, frame_number):
         """
@@ -88,6 +100,28 @@ class ModelPredForLabeling:
                 dets.append( (box, confidence, label) )
 
 
+            try:
+                
+                if self.data_frame_data_collection_for_distance is not None:
+                    class_type = 0
+                    distance = 10
+                    self.data_frame_data_collection_for_distance = self.data_frame_data_collection_for_distance.append({'xmin': str(xmin),
+                                                                        'ymin': str(ymin),
+                                                                        'xmax': str(xmax),
+                                                                        'ymax': str(ymax),
+                                                                        'class_type': str(class_type),
+                                                                        'width': str(xmax-xmin),
+                                                                        'height': str(ymax-ymin),
+                                                                        'time': str(datetime.datetime.utcnow()),
+                                                                        'zloc': str(distance),
+                                                                        }, ignore_index=True, verify_integrity=False,
+                                                                                sort=None)
+                    self.data_frame_data_collection_for_distance.to_csv(self.path_distance_csv)
+
+            except:
+                print('distance')
+
+
         try:
             if self.tracker is not None:
                 self.tracks = self.tracker.update_tracks(dets, frame=frame)
@@ -104,7 +138,7 @@ class ModelPredForLabeling:
 
                     color = self.colors_tracker[int(str(track_id))]
                     DrawingOpencv.drawing_rectangle(frame=frame, class_id=str(track_id), x1_y1=(xmin, ymin), x2_y2=(xmax, ymax), color=color)
-                    bb =4
+                    
         except:
             print('track')
 

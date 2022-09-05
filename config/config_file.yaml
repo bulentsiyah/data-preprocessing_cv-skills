@@ -10,7 +10,7 @@ model_main_yolov5 = ../yolov5
 model_yolo_v5_weight_filename = ../data-annotation-tools-for-yolo/_models/yolov5_demo_agust22/Demo_August_Port10.pt
 
 [changeable]
-last_frame = 1096
+last_frame = 42
 split_percentage_valid = 20
 split_type_yolov3_yolov5 = 1
 split_max_class_count = 5
