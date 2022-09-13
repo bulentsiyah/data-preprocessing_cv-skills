@@ -8,6 +8,7 @@ _images_ignore/*
 # exception to the rule
 !_screenshots/.gitkeep
 !_videos/.gitkeep
+!_videos/video_stabilization_2.mp4
 !_outputs/.gitkeep
 !_models/.gitkeep
 !_images_ignore/.gitkeep

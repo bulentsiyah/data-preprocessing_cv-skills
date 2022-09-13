@@ -109,3 +109,18 @@ git clone https://github.com/ultralytics/yolov5.git
     </th>
   </tr>
 </table>
+
+#### Image Stabilization Via Gaussian Filters In Opencv
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/video_stabilization.gif" alt="Overview" width="90%" height="90%">
+           <br><a href="./video_stabilization/main.py" >(video_stabilization.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
