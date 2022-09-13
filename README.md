@@ -73,3 +73,18 @@ Hope this might be useful to someone! :-)
     </th>
   </tr>
 </table>
+
+#### Data Analysis
+
+- **Summary:** veri ile ilgili csv dosyası yaratılır. Bu dosyada width height bulunduğu region alan gibi özellikler bulunur ve bu dosya dataanalysis_visualization.ipynb dosyasında grafiklerle incelenir.
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/dataanalysis.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./dataanalysis.py" >(dataanalysis.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
