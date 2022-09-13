@@ -1,20 +1,26 @@
-import sys
-sys.path.append('tools')
-from configmanager import ConfigurationManager
-from drawopencv import DrawingOpencv
-from singleobjecttracker import SingleObjectTracking
+import warnings
+warnings.filterwarnings("ignore")
+
+from semi_labeling import SingleObjectTracking
 
 import numpy as np
 import pandas as pd
-
 import torch
 import cv2
 import os
 import datetime
 import time
+import argparse
+
+import sys
+sys.path.append('tools')
+from configmanager import ConfigurationManager
+from drawopencv import DrawingOpencv
+from videocapture import VideoCapture
 
 sys.path.append('../')
 from deep_sort_realtime.deepsort_tracker import DeepSort
+
 
 class ModelPredForLabeling:
     """
@@ -28,11 +34,13 @@ class ModelPredForLabeling:
 
         self.video_id = video_id
 
-        self.model = torch.hub.load(self.configurationManager.config_readable['model_main_yolov5'], 'custom', path=self.configurationManager.config_readable['model_yolo_v5_weight_filename'], source='local')  # local model
+        path = "../data-preprocessing_cv-skills/_models/yolov5_demo_agust22/Demo_August_Port10.pt"
+
+        self.model = torch.hub.load(self.configurationManager.config_readable['model_main_yolov5'], 'custom', path=path, source='local')  # local model
 
         self.classes = ["port_s_daire", "port_s_kare", "port_anakare","sim_port","sim_aircar"]
         
-        temp_model_name = str(self.configurationManager.config_readable['model_yolo_v5_weight_filename'])
+        temp_model_name = str(path)
         if temp_model_name.find("demo")!=-1:
             self.classes = ["-", "port", "person","rust","--", "--"]
 
@@ -140,9 +148,58 @@ class ModelPredForLabeling:
                     DrawingOpencv.drawing_rectangle(frame=frame, class_id=str(track_id), x1_y1=(xmin, ymin), x2_y2=(xmax, ymax), color=color)
                     
         except:
-            print('track')
+            b = 5
+            #print('track')
 
 
+
+
+def main():
+    """
+    İslemin basladigi ana siniftir.                  
+    """
+
+    model_pred_for_labeling = ModelPredForLabeling(video_id=video_capture.id)
+    video_capture.selecetROI = True
+
+    
+
+    while True:
+        
+        video_capture.get_image()
+
+        if (video_capture.ret == False):
+            break
+ 
+        video_capture.save_pure_frame_save(video_capture.img)
+
+        model_pred_for_labeling.pred_labeling(frame=video_capture.img, frame_orj=video_capture.img_orj, frame_number=video_capture.frame_number)
+
+        # End Region Context
+        video_capture.save_vision_frame_save(video_capture.img)
+        cv2.imshow(configurationManager.config_readable['cv_imshow_title'], cv2.cvtColor(video_capture.img, cv2.COLOR_RGB2BGR))
+
+        if video_capture.selecetROI == True:
+            time.sleep(0.05)
+            
 if __name__ == '__main__':
-    model_pre_for_labeling = ModelPredForLabeling()
-    model_pre_for_labeling.pred_labeling()
+    configurationManager = ConfigurationManager()
+    
+    parser = argparse.ArgumentParser()
+    
+    class_id = configurationManager.config_readable['selected_class_id']
+    last_frame = configurationManager.config_changeable['last_frame']
+
+    parser.add_argument('-c', '--selected_class_id', help="Secilecek class id", default=class_id)
+    parser.add_argument('-l', '--last_frame', help="Baslanilmasi istenen frame numarasi", default=last_frame)
+    
+    args = parser.parse_args()
+    
+    
+    configurationManager.set_selected_id(selected_id=str(args.selected_class_id))
+    configurationManager.set_last_frame(last_frame=str(args.last_frame))
+    
+    
+    video_capture = VideoCapture(vision_frame_save=False)
+
+    main()

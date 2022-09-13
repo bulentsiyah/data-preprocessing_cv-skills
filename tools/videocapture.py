@@ -160,9 +160,7 @@ class VideoCapture:
             print("Çizimden dolayı hata oluştu!!! (Sistemin durmasına gerek yok) . videocapture get_image")
             pass
 
-        labeling_true_modelpredciton_false = eval(self.cfg.config_readable['labeling_true_modelpredciton_false'])
-        if labeling_true_modelpredciton_false:
-            self.drawopencv.drawing_time_stamp_text(self.img, selected_class=self.class_id)
+        self.drawopencv.drawing_time_stamp_text(self.img, selected_class=self.class_id)
             
         self.drawopencv.drawing_frame_number_text(self.img, self.frame_number, self.frame_fps)
 
