@@ -2,6 +2,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from semi_labeling import SingleObjectTracking
+from deepsort import DeepSortTracker
 
 import numpy as np
 import pandas as pd
@@ -17,9 +18,6 @@ sys.path.append('tools')
 from configmanager import ConfigurationManager
 from drawopencv import DrawingOpencv
 from videocapture import VideoCapture
-
-sys.path.append('../')
-from deep_sort_realtime.deepsort_tracker import DeepSort
 
 
 class ModelPredForLabeling:
@@ -48,13 +46,12 @@ class ModelPredForLabeling:
 
         self.single_object_tracking = SingleObjectTracking(video_id=self.video_id)
 
-        self.deepsort=False
+        self.deepsort=True
     
         if self.deepsort:
-            self.tracker = DeepSort(max_age=10)
-            self.colors_tracker = np.random.uniform(0, 255, size=(255, 3))
+            self.tracker = DeepSortTracker(max_age=10)
 
-        self.data_collection_for_distance = True
+        self.data_collection_for_distance = False
 
         if self.data_collection_for_distance:
             self.data_frame_data_collection_for_distance = pd.DataFrame()
@@ -107,46 +104,28 @@ class ModelPredForLabeling:
 
                 dets.append( (box, confidence, label) )
 
-
-            try:
                 
-                if self.data_frame_data_collection_for_distance is not None:
-                    class_type = 0
-                    distance = 10
-                    self.data_frame_data_collection_for_distance = self.data_frame_data_collection_for_distance.append({'xmin': str(xmin),
-                                                                        'ymin': str(ymin),
-                                                                        'xmax': str(xmax),
-                                                                        'ymax': str(ymax),
-                                                                        'class_type': str(class_type),
-                                                                        'width': str(xmax-xmin),
-                                                                        'height': str(ymax-ymin),
-                                                                        'time': str(datetime.datetime.utcnow()),
-                                                                        'zloc': str(distance),
-                                                                        }, ignore_index=True, verify_integrity=False,
-                                                                                sort=None)
-                    self.data_frame_data_collection_for_distance.to_csv(self.path_distance_csv)
+            if self.data_collection_for_distance:
+                class_type = 0
+                distance = 10
+                self.data_frame_data_collection_for_distance = self.data_frame_data_collection_for_distance.append({'xmin': str(xmin),
+                                                                    'ymin': str(ymin),
+                                                                    'xmax': str(xmax),
+                                                                    'ymax': str(ymax),
+                                                                    'class_type': str(class_type),
+                                                                    'width': str(xmax-xmin),
+                                                                    'height': str(ymax-ymin),
+                                                                    'time': str(datetime.datetime.utcnow()),
+                                                                    'zloc': str(distance),
+                                                                    }, ignore_index=True, verify_integrity=False,
+                                                                            sort=None)
+                self.data_frame_data_collection_for_distance.to_csv(self.path_distance_csv)
 
-            except:
-                print('distance')
 
 
         try:
             if self.tracker is not None:
-                self.tracks = self.tracker.update_tracks(dets, frame=frame)
-
-                for track in self.tracks:
-                    if not track.is_confirmed():
-                        continue
-                    track_id = track.track_id
-                    ltrb = track.to_ltrb()
-                    xmin=int(ltrb[0])
-                    ymin=int(ltrb[1])
-                    xmax=int(ltrb[2])
-                    ymax=int(ltrb[3])
-
-                    color = self.colors_tracker[int(str(track_id))]
-                    DrawingOpencv.drawing_rectangle(frame=frame, class_id=str(track_id), x1_y1=(xmin, ymin), x2_y2=(xmax, ymax), color=color)
-                    
+                self.tracker.update_tracks(dets=dets, frame=frame)
         except:
             b = 5
             #print('track')

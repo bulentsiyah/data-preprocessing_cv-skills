@@ -20,9 +20,12 @@ Hope this might be useful to someone! :-)
 - [ ] Her yeni CV yeteneği çıktısını readme ekle
 
 ## How does it work?
-- [x] splitdataset çalıştırıp dataset ayrılır(train-valid).
-- [x] dataanalysis çalıştırılır, oluşan csv dataanalysis_visualization.ipython yorumlanır.
-- [] splitte hem yolov3 hemde yolov5 için dosyalar rastgele seçilmeli
+requirements.txt yükle: pip install -r requirements.txt
+
+reponun bir adım gerisine:
+git clone https://github.com/nwojke/deep_sort.git
+git clone https://github.com/ultralytics/yolov5.git
+
 
 
 ## Overview
@@ -62,6 +65,7 @@ Hope this might be useful to someone! :-)
 #### Split Sataset
 
 - **Summary:** Etiketleme veya pretrained ile hazırlanmış veriyi configkteki oranlara göre ayırır. 
+- [] splitte hem yolov3 hemde yolov5 için dosyalar rastgele seçilmeli
 - **Keywords:** 
 <table style="width:100%">
   <tr>
@@ -77,6 +81,7 @@ Hope this might be useful to someone! :-)
 #### Data Analysis
 
 - **Summary:** veri ile ilgili csv dosyası yaratılır. Bu dosyada width height bulunduğu region alan gibi özellikler bulunur ve bu dosya dataanalysis_visualization.ipynb dosyasında grafiklerle incelenir.
+
 - **Keywords:** 
 <table style="width:100%">
   <tr>
@@ -84,6 +89,22 @@ Hope this might be useful to someone! :-)
       <p align="center">
            <img src="./_images_must/readme/dataanalysis.png" alt="Overview" width="90%" height="90%">
            <br><a href="./dataanalysis.py" >(dataanalysis.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+
+#### DeepSort
+
+- **Summary:** detectiondan gelen bounding box larla sonraki framelerde aynı id almasını sağlyan kod bloğu.
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/deepsort.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./deepsort.py" >(deepsort.py)</a>
       </p>
     </th>
   </tr>

@@ -9,7 +9,7 @@ video_path_file = /_videos/all_17-18-19_port_pas_23hataliport_.mp4
 selected_class_id = 0
 
 [changeable]
-last_frame = 164
+last_frame = 518
 split_percentage_valid = 20
 split_type_yolov3_yolov5 = 1
 split_max_class_count = 3
