@@ -3,12 +3,14 @@ _screenshots/*
 _videos/*
 _outputs/*
 _models/*
+_images_ignore/*
 
 # exception to the rule
 !_screenshots/.gitkeep
 !_videos/.gitkeep
 !_outputs/.gitkeep
 !_models/.gitkeep
+!_images_ignore/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
