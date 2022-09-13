@@ -58,3 +58,18 @@ Hope this might be useful to someone! :-)
     </th>
   </tr>
 </table>
+
+#### Split Sataset
+
+- **Summary:** Etiketleme veya pretrained ile hazırlanmış veriyi configkteki oranlara göre ayırır. 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/splitdataset.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./splitdataset.py" >(splitdataset.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
