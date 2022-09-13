@@ -43,3 +43,18 @@ Hope this might be useful to someone! :-)
     </th>
   </tr>
 </table>
+
+#### Yarı otomatik etiketleme
+
+- **Summary:** Daha önce eğitilmiş bir model video üzerinde tahminleme yaptırılıp, etiketlemeye yardımcı olması sağlanır. 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/pretrain_model_for_labeling.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./pretrain_model_for_labeling.py" >(pretrain_model_for_labeling.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
