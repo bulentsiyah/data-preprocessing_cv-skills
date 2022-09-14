@@ -20,11 +20,17 @@ Hope this might be useful to someone! :-)
 - [ ] Her yeni CV yeteneği çıktısını readme ekle
 
 ## How does it work?
+reponun bir adım gerisindeki kutuphaneler:
+pretrained için
+git clone https://github.com/ultralytics/yolov5.git
 requirements.txt yükle: pip install -r requirements.txt
 
-reponun bir adım gerisine:
+deepsort için
 git clone https://github.com/nwojke/deep_sort.git
-git clone https://github.com/ultralytics/yolov5.git
+requirements.txt yükle: pip install -r requirements.txt
+
+Gradio için:
+pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requirements.txt gradio
 
 
 
@@ -120,6 +126,22 @@ git clone https://github.com/ultralytics/yolov5.git
       <p align="center">
            <img src="./_images_must/readme/video_stabilization.gif" alt="Overview" width="90%" height="90%">
            <br><a href="./video_stabilization/main.py" >(video_stabilization.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+
+#### Model Representation with Gradio-HuggingFace
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/model_representation_detection.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./model_representation/detection/app.py" >(app.py)</a>
       </p>
     </th>
   </tr>
