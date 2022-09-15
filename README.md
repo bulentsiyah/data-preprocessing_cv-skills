@@ -132,7 +132,7 @@ pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requ
 </table>
 
 
-#### Model Representation with Gradio-HuggingFace
+#### Detection Model Representation with Gradio-HuggingFace
 
 - **Summary:** 
 - **Keywords:** 
@@ -142,6 +142,21 @@ pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requ
       <p align="center">
            <img src="./_images_must/readme/model_representation_detection.png" alt="Overview" width="90%" height="90%">
            <br><a href="./model_representation/detection/app.py" >(app.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+#### Segmentation Model Representation with Gradio-HuggingFace
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/model_representation_segmentation.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./model_representation/segmentation/app.py" >(app.py)</a>
       </p>
     </th>
   </tr>
