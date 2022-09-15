@@ -4,6 +4,7 @@ _videos/*
 _outputs/*
 _models/*
 _images_ignore/*
+model_representation/segmentation/saved_model/*
 
 # exception to the rule
 !_screenshots/.gitkeep
@@ -12,6 +13,7 @@ _images_ignore/*
 !_outputs/.gitkeep
 !_models/.gitkeep
 !_images_ignore/.gitkeep
+!model_representation/segmentation/saved_model/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
