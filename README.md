@@ -167,6 +167,51 @@ pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requ
 
 
 
+#### Camera Calibration
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/camera_calibration.jpg" alt="Overview" width="90%" height="90%">
+           <br><a href="./camera_calibration.py" >(camera_calibration.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+
+#### Simple Background Estimation in Videos
+
+- **Summary:** We can assume most of the time, every pixel sees the same piece of the background because the camera is not moving. Occasionally, a car or other moving object comes in the front and obscure the background.
+- **Keywords:** Background Estimation
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/background_estimation.png" alt="Overview" width="70%" height="90%">
+           <br><a href="./background_estimation.py" >(background_estimation.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+#### Background Subtraction with OpenCV and BGS Libraries
+
+- **Summary:** WSteeping into the idea behind these CV-systems we can observe that in most cases the initial steps contain background subtraction (BS), which helps to obtain relatively rough and rapid identifications of the objects in the video stream for their further subtle handling. In the current post, we are going to cover several noteworthy algorithms in terms of accuracy and processing time BS methods: SuBSENSE and LSBP-based GSoC method.
+- **Keywords:** Background Estimation
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/Background-Subtraction.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./background_subtraction_opencv.py" >(background_subtraction_opencv.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
 
 #### Hough Transform-Line&Circle
 
