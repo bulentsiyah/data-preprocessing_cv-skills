@@ -13,6 +13,7 @@ model_representation/segmentation/saved_model/*
 !_videos/backg_esti.mp4
 !_videos/space_traffic.mp4
 !_videos/balls.mp4
+!_videos/visual_beacon_sim.mp4
 !_outputs/.gitkeep
 !_models/.gitkeep
 !_images_ignore/.gitkeep

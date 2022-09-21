@@ -2,12 +2,41 @@ from datetime import datetime, timedelta
 import cv2 
 import numpy as np
 import os
+from dataclasses import dataclass
 from pathlib import Path
+import math
+from math import atan2, pi, cos, sin
+
+@dataclass
+class GeoLocation:
+    name: str
+    latitude: float
+    longitude: float
+
+
+class Utils:
+    location_coefficient = 10000000
+    camera_height_max = 2081
+    camera_height_min = 480
 
 class DrawingOpencv:
     """
     Tum ekrana cizim islemlerinin yapildigi siniftir.
+    
     """
+
+    visual_beacon_min_distance = 30
+    methods = ['cv2.TM_CCOEFF', 'cv2.TM_CCOEFF_NORMED', 'cv2.TM_CCORR', 'cv2.TM_CCORR_NORMED', 'cv2.TM_SQDIFF',
+               'cv2.TM_SQDIFF_NORMED']
+    methods_str = cv2.TM_CCOEFF_NORMED
+    threshold_visual_vs_beacon = 3.09 # meter
+    threshold_matching = 0.40 # %70
+    max_match_template_corr_score = 1500111222
+    min_match_template_corr_score =  200111222
+
+    color_beacon = (255,0,0)
+    color_text_beacon = (255,0,0)
+
 
     line_thick = 0.65
     color_blue = (0, 0, 255) #blue
@@ -17,6 +46,56 @@ class DrawingOpencv:
 
     def __init__(self):
         pass
+
+
+    @staticmethod
+    def angle_between(last_cage_left_top_corner, new_cage_left_top_corner, frame = None, visual_debug=False, camera_parameters=None):
+        delta_x_image = new_cage_left_top_corner[0] - last_cage_left_top_corner[0]
+        delta_y_image = new_cage_left_top_corner[1] - last_cage_left_top_corner[1]
+        angle_rad = atan2(delta_x_image, delta_y_image)
+        angle_deg = angle_rad * 180.0 / pi
+        angle_deg = math.atan2(last_cage_left_top_corner[1] - new_cage_left_top_corner[1], last_cage_left_top_corner[0] - new_cage_left_top_corner[0]) * 180/math.pi
+        delta_x = (delta_y_image * camera_parameters.pixel_in_centimeters)/100
+        delta_y = -(delta_x_image * camera_parameters.pixel_in_centimeters)/100
+       
+
+        # # angle_rad = atan2(delta_x_image, delta_y_image)
+        # # angle_deg = angle_rad * 180.0 / pi
+        # # angle_deg = math.atan2(last_cage_left_top_corner[1] - new_cage_left_top_corner[1], last_cage_left_top_corner[0] - new_cage_left_top_corner[0]) * 180/math.pi
+        # # angle_rad = math.atan2(new_cage_left_top_corner[1]- last_cage_left_top_corner[1] , (new_cage_left_top_corner[0]- last_cage_left_top_corner[0]) )
+        # # angle_deg = math.degrees(angle_rad)
+        
+        # delta_x = (delta_y_image * camera_parameters.pixel_in_centimeters)/100
+        # delta_y = -(delta_x_image * camera_parameters.pixel_in_centimeters)/100
+        # angle_rad = math.atan2(delta_x, delta_y )
+        # angle_deg = math.degrees(angle_rad)
+
+        return angle_deg, angle_rad, delta_x, delta_y
+
+
+    @staticmethod
+    def drawing_beacon_rectangle(frame, top_left_corner=None, right_bottom_corner=None):
+        try:
+            cv2.rectangle(frame, top_left_corner, right_bottom_corner, DrawingOpencv.color_beacon, thickness=0)
+
+            # First we crop the sub-rect from the image
+
+            sub_img = frame[top_left_corner[1]:right_bottom_corner[1], top_left_corner[0]:right_bottom_corner[0]]
+            white_rect = np.ones(sub_img.shape, dtype=np.uint8) * 255
+
+            res = cv2.addWeighted(sub_img, 0.5, white_rect, 0.5, 1.0)
+
+            # Putting the image back to its position
+            frame[top_left_corner[1]:right_bottom_corner[1], top_left_corner[0]:right_bottom_corner[0]] = res
+
+            cv2.rectangle(frame, top_left_corner, right_bottom_corner, DrawingOpencv.color_beacon, thickness=0)
+
+            center_rectangle =  (int(top_left_corner[0]+10), int((top_left_corner[1]+right_bottom_corner[1])/2))
+
+            line_thick=0.30
+            cv2.putText(frame, "Visual Beacon", center_rectangle, cv2.FONT_HERSHEY_DUPLEX, line_thick, DrawingOpencv.color_beacon, 1)
+        except:
+            pass
 
     @staticmethod
     def drawing_time_stamp_text(frame, selected_class):

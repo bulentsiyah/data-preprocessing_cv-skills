@@ -31,9 +31,10 @@ class CameraParameters:
         return: Json
         """
 
-        list_of_camera = {"hd": {"width": 1920, "height": 1080},
+        list_of_camera = {"default" : {"width": 1280, "height" : 720},
+                        "hd": {"width": 1920, "height": 1080},
                          "webcam": {"width": 1280, "height": 960},
-                         "webcam2": {"width": 640, "height": 480},
+                         "webcam2": {"width": 640, "height": 480 },
                          "video_airbus"  : {"width": 1280, "height" : 720}
                          }
         if camera_type in list_of_camera.keys():

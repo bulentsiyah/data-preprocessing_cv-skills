@@ -293,3 +293,18 @@ pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requ
     </th>
   </tr>
 </table>
+
+#### Visual Beacon
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/visual_beacon.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./visualbeacon.py" >(visualbeacon.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
