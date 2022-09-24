@@ -38,63 +38,16 @@ pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requ
 
 ### Projects
 
-#### Yarı otomatik etiketleme
+#### Kalman Filters Estimation
 
-- **Summary:** Video üzerinden seçili objeyi takip edip etiketleme. Önce ilk sınıftan toplam sınıfa kadar döngü şeklinde etıketleme yapılır. 
+- **Summary:** 
 - **Keywords:** 
 <table style="width:100%">
   <tr>
     <th>
       <p align="center">
-           <img src="./_images_must/readme/semi_labeling.png" alt="Overview" width="90%" height="90%">
-           <br><a href="./semi_labeling.py" >(semi_labeling.py)</a>
-      </p>
-    </th>
-  </tr>
-</table>
-
-#### Yarı otomatik etiketleme
-
-- **Summary:** Daha önce eğitilmiş bir model video üzerinde tahminleme yaptırılıp, etiketlemeye yardımcı olması sağlanır. 
-- **Keywords:** 
-<table style="width:100%">
-  <tr>
-    <th>
-      <p align="center">
-           <img src="./_images_must/readme/pretrain_model_for_labeling.png" alt="Overview" width="90%" height="90%">
-           <br><a href="./pretrain_model_for_labeling.py" >(pretrain_model_for_labeling.py)</a>
-      </p>
-    </th>
-  </tr>
-</table>
-
-#### Split Sataset
-
-- **Summary:** Etiketleme veya pretrained ile hazırlanmış veriyi configkteki oranlara göre ayırır. 
-- [] splitte hem yolov3 hemde yolov5 için dosyalar rastgele seçilmeli
-- **Keywords:** 
-<table style="width:100%">
-  <tr>
-    <th>
-      <p align="center">
-           <img src="./_images_must/readme/splitdataset.png" alt="Overview" width="90%" height="90%">
-           <br><a href="./splitdataset.py" >(splitdataset.py)</a>
-      </p>
-    </th>
-  </tr>
-</table>
-
-#### Data Analysis
-
-- **Summary:** veri ile ilgili csv dosyası yaratılır. Bu dosyada width height bulunduğu region alan gibi özellikler bulunur ve bu dosya dataanalysis_visualization.ipynb dosyasında grafiklerle incelenir.
-
-- **Keywords:** 
-<table style="width:100%">
-  <tr>
-    <th>
-      <p align="center">
-           <img src="./_images_must/readme/dataanalysis.png" alt="Overview" width="90%" height="90%">
-           <br><a href="./dataanalysis.py" >(dataanalysis.py)</a>
+           <img src="./_images_must/readme/kalman_filters_estimation.jpg" alt="Overview" width="90%" height="90%">
+           <br><a href="./kalman_filters_estimation.py" >(kalman_filters_estimation.py)</a>
       </p>
     </th>
   </tr>
@@ -115,87 +68,6 @@ pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requ
     </th>
   </tr>
 </table>
-
-#### Image Stabilization Via Gaussian Filters In Opencv
-
-- **Summary:** 
-- **Keywords:** 
-<table style="width:100%">
-  <tr>
-    <th>
-      <p align="center">
-           <img src="./_images_must/readme/video_stabilization.gif" alt="Overview" width="90%" height="90%">
-           <br><a href="./video_stabilization/main.py" >(video_stabilization.py)</a>
-      </p>
-    </th>
-  </tr>
-</table>
-
-
-#### Detection Model Representation with Gradio-HuggingFace
-
-- **Summary:** 
-- **Keywords:** 
-<table style="width:100%">
-  <tr>
-    <th>
-      <p align="center">
-           <img src="./_images_must/readme/model_representation_detection.png" alt="Overview" width="90%" height="90%">
-           <br><a href="./model_representation/detection/app.py" >(app.py)</a>
-      </p>
-    </th>
-  </tr>
-</table>
-
-#### Segmentation Model Representation with Gradio-HuggingFace
-
-- **Summary:** 
-- **Keywords:** 
-<table style="width:100%">
-  <tr>
-    <th>
-      <p align="center">
-           <img src="./_images_must/readme/model_representation_segmentation.png" alt="Overview" width="90%" height="90%">
-           <br><a href="./model_representation/segmentation/app.py" >(app.py)</a>
-      </p>
-    </th>
-  </tr>
-</table>
-
-
-#### Kalman Filters Estimation
-
-- **Summary:** 
-- **Keywords:** 
-<table style="width:100%">
-  <tr>
-    <th>
-      <p align="center">
-           <img src="./_images_must/readme/kalman_filters_estimation.jpg" alt="Overview" width="90%" height="90%">
-           <br><a href="./kalman_filters_estimation.py" >(kalman_filters_estimation.py)</a>
-      </p>
-    </th>
-  </tr>
-</table>
-
-
-
-
-#### Camera Calibration
-
-- **Summary:** 
-- **Keywords:** 
-<table style="width:100%">
-  <tr>
-    <th>
-      <p align="center">
-           <img src="./_images_must/readme/camera_calibration.jpg" alt="Overview" width="90%" height="90%">
-           <br><a href="./camera_calibration.py" >(camera_calibration.py)</a>
-      </p>
-    </th>
-  </tr>
-</table>
-
 
 #### Simple Background Estimation in Videos
 
@@ -294,6 +166,134 @@ pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requ
   </tr>
 </table>
 
+#### Yarı otomatik etiketleme
+
+- **Summary:** Video üzerinden seçili objeyi takip edip etiketleme. Önce ilk sınıftan toplam sınıfa kadar döngü şeklinde etıketleme yapılır. 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/semi_labeling.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./semi_labeling.py" >(semi_labeling.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+#### Yarı otomatik etiketleme
+
+- **Summary:** Daha önce eğitilmiş bir model video üzerinde tahminleme yaptırılıp, etiketlemeye yardımcı olması sağlanır. 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/pretrain_model_for_labeling.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./pretrain_model_for_labeling.py" >(pretrain_model_for_labeling.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+#### Split Sataset
+
+- **Summary:** Etiketleme veya pretrained ile hazırlanmış veriyi configkteki oranlara göre ayırır. 
+- [] splitte hem yolov3 hemde yolov5 için dosyalar rastgele seçilmeli
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/splitdataset.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./splitdataset.py" >(splitdataset.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+#### Data Analysis
+
+- **Summary:** veri ile ilgili csv dosyası yaratılır. Bu dosyada width height bulunduğu region alan gibi özellikler bulunur ve bu dosya dataanalysis_visualization.ipynb dosyasında grafiklerle incelenir.
+
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/dataanalysis.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./dataanalysis.py" >(dataanalysis.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+#### Detection Model Representation with Gradio-HuggingFace
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/model_representation_detection.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./model_representation/detection/app.py" >(app.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+#### Segmentation Model Representation with Gradio-HuggingFace
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/model_representation_segmentation.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./model_representation/segmentation/app.py" >(app.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+
+#### Image Stabilization Via Gaussian Filters In Opencv
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/video_stabilization.gif" alt="Overview" width="90%" height="90%">
+           <br><a href="./video_stabilization/main.py" >(video_stabilization.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+
+
+#### Camera Calibration
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/camera_calibration.jpg" alt="Overview" width="90%" height="90%">
+           <br><a href="./camera_calibration.py" >(camera_calibration.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+
+
+
 #### Visual Beacon
 
 - **Summary:** 
@@ -304,6 +304,23 @@ pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requ
       <p align="center">
            <img src="./_images_must/readme/visual_beacon.png" alt="Overview" width="90%" height="90%">
            <br><a href="./visualbeacon.py" >(visualbeacon.py)</a>
+      </p>
+    </th>
+  </tr>
+</table>
+
+
+
+#### Motion Detection
+
+- **Summary:** 
+- **Keywords:** 
+<table style="width:100%">
+  <tr>
+    <th>
+      <p align="center">
+           <img src="./_images_must/readme/motion_detection.png" alt="Overview" width="90%" height="90%">
+           <br><a href="./motion_detection.py" >(motion_detection.py)</a>
       </p>
     </th>
   </tr>
