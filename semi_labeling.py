@@ -286,6 +286,18 @@ if __name__ == '__main__':
     
     configurationManager.set_selected_id(selected_id=str(args.selected_class_id))
     configurationManager.set_last_frame(last_frame=str(args.last_frame))
+
+    '''
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--egitim_True_predticonandcheck_False', help="egitim_True_predticonandcheck_False", action='store_true')
+    args = parser.parse_args()
+    prepare(args)
+
+
+    bb= eval(str(args.egitim_True_predticonandcheck_False))
+    
+    
+    '''
     
     
     video_capture = VideoCapture(vision_frame_save=False)
