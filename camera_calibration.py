@@ -6,6 +6,7 @@ import argparse
 # termination criteria
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
+# xx deneme 
 
 def calibrate(dirpath, image_format, width=9, height=6):
     """ Apply camera calibration operation for images in the given directory path. """
