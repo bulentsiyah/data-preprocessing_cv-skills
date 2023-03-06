@@ -4,6 +4,9 @@ import shutil
 from IPython.display import display, clear_output, HTML
 from core.dataset import Dataset
 
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 import numpy as np
 import cv2
 import pandas as pd
@@ -23,11 +26,15 @@ class Main():
 
     def __init__(self):
 
-        anapath='D:/orhan/Belgeler/Datasets/airborne_object_tracking'
-        anapath='E:/Datasets/AmazonAirPrime'
+        mantis_anapath='E:/Datasets/Mantis-Shrimp-Eye-s-Collision-Avoidance'
+
+        self.video_out_path = mantis_anapath +"/videos"
+        if os.path.exists(self.video_out_path)==False:
+            print('created')
+            os.mkdir(self.video_out_path)
 
         # part1 ve images path yolu
-        self.part1_path = anapath+'/airborne-detection-starter-kit/data/part1/'
+        self.part1_path = 'E:/Datasets/AmazonAirPrime'+'/airborne-detection-starter-kit/data/part1/'
         self.images_path = self.part1_path+'Images'
 
         # Klasördeki klasörlerin listesi
@@ -37,29 +44,48 @@ class Main():
         self.dataset = Dataset(self.part1_path, 's3://airborne-obj-detection-challenge-training/part1/', partial=True, prefix='part1')
 
         #yolo pathleri
-        self.yolo_output_dir = os.path.join(anapath, "yolo_dataset/" )
+        self.yolo_output_dir = os.path.join(mantis_anapath, "yolo_dataset/" )
 
         #dnn pathleri
-        self.dnn_output_dir = os.path.join(anapath, "dnn_dataset/" )
+        self.dnn_output_dir = os.path.join(mantis_anapath, "dnn_dataset/" )
 
         #siamese pathleri
-        self.siamese_output_dir = os.path.join(anapath, "siamese_dataset/" )
+        self.siamese_output_dir = os.path.join(mantis_anapath, "siamese_dataset/" )
 
-        #tüm operasyonu ana dataframei
-        self.path_ana_islemis_dataframe = anapath+'/ana_islemis_dataframe.csv'
+        #tüm train operasyonu ana dataframei
+        self.path_ana_train_islemis_dataframe = mantis_anapath+'/ana_train_islemis_dataframe.csv'
         try:
-            self.ana_islemis_dataframe =pd.read_csv(self.path_ana_islemis_dataframe)
+            self.ana_train_islemis_dataframe =pd.read_csv(self.path_ana_train_islemis_dataframe)
         except:
             df_cols = ['flight_id', 'toplam_frame' , 'aldigimiz_background_sayisi', 'toplam_background_sayisi','all_objects']
             #ObjectTypes.Airplane.name,ObjectTypes.Helicopter.name,ObjectTypes.Bird.name, ObjectTypes.Drone.name,ObjectTypes.Flock.name,ObjectTypes.Airborne.name]
-            self.ana_islemis_dataframe = pd.DataFrame(columns=df_cols)
+            self.ana_train_islemis_dataframe = pd.DataFrame(columns=df_cols)
+
+        self.video_out_path_train = self.video_out_path +"/train"
+        if os.path.exists(self.video_out_path_train)==False:
+            print('created')
+            os.mkdir(self.video_out_path_train)
+
+        #tüm test_background operasyonu ana dataframei
+        self.path_ana_test_background_islemis_dataframe = mantis_anapath+'/ana_test_background_islemis_dataframe.csv'
+        try:
+            self.ana_test_background_islemis_dataframe =pd.read_csv(self.path_ana_test_background_islemis_dataframe)
+        except:
+            df_cols = ['flight_id', 'toplam_frame' ]
+            #ObjectTypes.Airplane.name,ObjectTypes.Helicopter.name,ObjectTypes.Bird.name, ObjectTypes.Drone.name,ObjectTypes.Flock.name,ObjectTypes.Airborne.name]
+            self.ana_test_background_islemis_dataframe = pd.DataFrame(columns=df_cols)
+
+        self.video_out_path_test_background = self.video_out_path +"/test_back_ground"
+        if os.path.exists(self.video_out_path_test_background)==False:
+            print('created')
+            os.mkdir(self.video_out_path_test_background)
 
 
         self.height, self.width = 2048 , 2448 # 640 * 640 height 3 width 4 küçülüyor
         self.kucuk_obje_siniri = 15 # sinir ağına orjinalde 16*16 lıklar kabuldur, boyut 4/1 kuculebılır 
         self.fps = 10
 
-        self.kac_kere_calissin = 35
+        self.kac_kere_calissin = 30
 
 
     def run(self):
@@ -69,17 +95,29 @@ class Main():
             
             self.lucky_flight_id = lucky_flight_folder
 
-            #dataframe daha once varsa pas geç 
-            flight_id_var_mi = self.ana_islemis_dataframe['flight_id'].str.contains(self.lucky_flight_id).any()
+            #train dataframe daha once varsa pas geç 
+            flight_id_var_mi = self.ana_train_islemis_dataframe['flight_id'].str.contains(self.lucky_flight_id).any()
             if flight_id_var_mi ==True:
-                print("flight_id_var: ",self.lucky_flight_id)
+                #print("flight_id_var: ",self.lucky_flight_id)
+
+                #bır kereye mahsus taşıma 
+                '''video_out_path = self.images_path+"/"+self.lucky_flight_id+"/"+self.lucky_flight_id+'.mp4'
+                dest_video_path= self.video_out_path_train+"/"+self.lucky_flight_id+'.mp4'
+                shutil.move(video_out_path, dest_video_path)'''
+                continue
+
+
+            #test backgorund dataframe daha once varsa pas geç 
+            flight_id_var_mi = self.ana_test_background_islemis_dataframe['flight_id'].str.contains(self.lucky_flight_id).any()
+            if flight_id_var_mi ==True:
+                #print("flight_id_var: ",self.lucky_flight_id)
                 continue
 
             self.lucky_flight = None
             try:
                 self.lucky_flight = self.dataset.get_flight_by_id(self.lucky_flight_id)
             except:
-                print("ucus bulunamadi: ",self.lucky_flight_id)
+                self.ucusBulunamadi()
                 continue
 
             kactayiz = kactayiz+1
@@ -142,7 +180,7 @@ class Main():
 
             #dataframe kaydet
 
-            self.ana_islemis_dataframe = self.ana_islemis_dataframe.append({'flight_id': str(self.lucky_flight_id),
+            self.ana_train_islemis_dataframe = self.ana_train_islemis_dataframe.append({'flight_id': str(self.lucky_flight_id),
                                                                         'toplam_frame': str(toplam_frame),
                                                                         'aldigimiz_background_sayisi': str(len(hangi_frameleri_alayim)),
                                                                         'toplam_background_sayisi': str(background_sayisi),
@@ -152,9 +190,48 @@ class Main():
 
 
         
-            self.ana_islemis_dataframe.to_csv(self.path_ana_islemis_dataframe, index=False)
+            self.ana_train_islemis_dataframe.to_csv(self.path_ana_train_islemis_dataframe, index=False)
 
             
+
+    def ucusBulunamadi(self,):
+
+        print("ucus bulunamadi: ",self.lucky_flight_id)
+
+        current_pure_images_dir = self.images_path+"/"+self.lucky_flight_id
+
+        video_out_path = self.video_out_path_test_background+"/"+self.lucky_flight_id+'.mp4'
+
+        if os.path.exists(video_out_path):
+            vision_frame_save_out = None
+        else:
+            vision_frame_save_out = cv2.VideoWriter(video_out_path ,cv2.VideoWriter_fourcc(*'xvid'), self.fps, (self.width,self.height)) 
+
+        toplam_frame=0
+        for png_file in glob.iglob(os.path.join(current_pure_images_dir, '*.png')):
+            toplam_frame = toplam_frame + 1
+            try:
+                frame = cv2.imread(png_file)
+                if vision_frame_save_out is not None:
+                    vision_frame_save_out.write(frame)
+                    print("-------video olusturuluyor-----")
+                else:
+                    print("-------video pas geciyor-----")
+                    pass
+                    
+            except:
+                print("try-catch save_vision_frame_save")
+                pass
+            
+
+        self.ana_test_background_islemis_dataframe = self.ana_test_background_islemis_dataframe.append({'flight_id': str(self.lucky_flight_id),
+                                                                        'toplam_frame': str(toplam_frame)},
+                                                                        ignore_index=True, verify_integrity=False,
+                                                                                sort=False)
+
+
+        
+        self.ana_test_background_islemis_dataframe.to_csv(self.path_ana_test_background_islemis_dataframe, index=False)
 
     # keys
     def removeNumbers(self,s):
@@ -215,7 +292,9 @@ class Main():
         
         current_dir = self.part1_path+'/Images/'+self.lucky_flight_id
 
-        video_out_path = current_dir+"/"+self.lucky_flight_id+'.mp4'
+        #video_out_path = current_dir+"/"+self.lucky_flight_id+'.mp4'
+        video_out_path = self.video_out_path_train+"/"+self.lucky_flight_id+'.mp4'
+
         if os.path.exists(video_out_path):
             vision_frame_save_out = None
         else:
@@ -323,7 +402,6 @@ class Main():
 
             try:
                 frame = cv2.imread(png_file)
-                frame_resize = cv2.resize(frame, (int(self.width/2),int(self.height/2)))
                 if vision_frame_save_out is not None:
                     vision_frame_save_out.write(frame)
                     print("-------video olusturuluyor-----")
@@ -334,6 +412,8 @@ class Main():
             except:
                 print("try-catch save_vision_frame_save")
                 pass
+        
+            frame_resize = cv2.resize(frame, (int(self.width/2),int(self.height/2)))
             
             if counter == index_test:
                 counter = 1

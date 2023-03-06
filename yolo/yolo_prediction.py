@@ -5,9 +5,11 @@ import torch
 
 
 
-video_path = 'E:/Datasets/AmazonAirPrime/airborne-detection-starter-kit/data/part1/Images/0001ba865c8e410e88609541b8f55ffc/0001ba865c8e410e88609541b8f55ffc.mp4'
+
 
 video_path = 'E:/Datasets/AmazonAirPrime/airborne-detection-starter-kit/data/part1/Images/00bb96a5a68f4fa5bc5c5dc66ce314d2/00bb96a5a68f4fa5bc5c5dc66ce314d2.mp4'
+video_path = 'E:/Datasets/AmazonAirPrime/airborne-detection-starter-kit/data/part1/Images/0001ba865c8e410e88609541b8f55ffc/0001ba865c8e410e88609541b8f55ffc.mp4'
+
 model = YOLO("E:/Codes/data-preprocessing_cv-skills/runs/detect/yolov8x_custom_imgsz_1024/weights/best.pt")
 
 
