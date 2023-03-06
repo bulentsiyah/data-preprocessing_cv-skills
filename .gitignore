@@ -5,6 +5,7 @@ _outputs/*
 _models/*
 _images_ignore/*
 model_representation/segmentation/saved_model/*
+runs/*
 
 # exception to the rule
 !_screenshots/.gitkeep
