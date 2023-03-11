@@ -16,6 +16,26 @@ model = YOLO("E:/Codes/data-preprocessing_cv-skills/runs/detect/yolov8x_custom_i
 print('cuda_avail:', torch.cuda.is_available())
 print('cuda_device:', torch.cuda.device_count())
 
+'''
+
+>>> torch.cuda.is_available()
+True
+
+>>> torch.cuda.device_count()
+1
+
+>>> torch.cuda.current_device()
+0
+
+>>> torch.cuda.device(0)
+<torch.cuda.device at 0x7efce0b03be0>
+
+>>> torch.cuda.get_device_name(0)
+'GeForce GTX 950M'
+
+
+'''
+
 
 
 # Bir video nesnesi oluşturulur, bu durumda videoyu bir dosyadan okuyoruz

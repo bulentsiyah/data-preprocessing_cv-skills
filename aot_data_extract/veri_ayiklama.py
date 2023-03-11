@@ -85,7 +85,7 @@ class Main():
         self.kucuk_obje_siniri = 15 # sinir ağına orjinalde 16*16 lıklar kabuldur, boyut 4/1 kuculebılır 
         self.fps = 10
 
-        self.kac_kere_calissin = 30
+        self.kac_kere_calissin = 50
 
 
     def run(self):
