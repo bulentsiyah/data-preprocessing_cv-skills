@@ -82,7 +82,7 @@ class Main():
 
 
         self.height, self.width = 2048 , 2448 # 640 * 640 height 3 width 4 küçülüyor
-        self.kucuk_obje_siniri = 15 # sinir ağına orjinalde 16*16 lıklar kabuldur, boyut 4/1 kuculebılır 
+        self.kucuk_obje_siniri = 5 # sinir ağına orjinalde 16*16 lıklar kabuldur, boyut 4/1 kuculebılır 
         self.fps = 10
 
         self.kac_kere_calissin = 50
