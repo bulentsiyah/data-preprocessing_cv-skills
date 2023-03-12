@@ -59,7 +59,6 @@ class Main():
             self.ana_train_islemis_dataframe =pd.read_csv(self.path_ana_train_islemis_dataframe)
         except:
             df_cols = ['flight_id', 'toplam_frame' , 'aldigimiz_background_sayisi', 'toplam_background_sayisi','all_objects']
-            #ObjectTypes.Airplane.name,ObjectTypes.Helicopter.name,ObjectTypes.Bird.name, ObjectTypes.Drone.name,ObjectTypes.Flock.name,ObjectTypes.Airborne.name]
             self.ana_train_islemis_dataframe = pd.DataFrame(columns=df_cols)
 
         self.video_out_path_train = self.video_out_path +"/train"
@@ -73,7 +72,6 @@ class Main():
             self.ana_test_background_islemis_dataframe =pd.read_csv(self.path_ana_test_background_islemis_dataframe)
         except:
             df_cols = ['flight_id', 'toplam_frame' ]
-            #ObjectTypes.Airplane.name,ObjectTypes.Helicopter.name,ObjectTypes.Bird.name, ObjectTypes.Drone.name,ObjectTypes.Flock.name,ObjectTypes.Airborne.name]
             self.ana_test_background_islemis_dataframe = pd.DataFrame(columns=df_cols)
 
         self.video_out_path_test_background = self.video_out_path +"/test_back_ground"
@@ -86,7 +84,7 @@ class Main():
         self.kucuk_obje_siniri = 0 # sinir ağına orjinalde 16*16 lıklar kabuldur, boyut 4/1 kuculebılır 
         self.fps = 10
 
-        self.kac_kere_calissin = 1
+        self.kac_kere_calissin = 50
 
 
     def run(self):
@@ -414,7 +412,7 @@ class Main():
                 print("try-catch save_vision_frame_save")
                 pass
         
-            frame_resize = cv2.resize(frame, (int(self.width/2),int(self.height/2)))
+            frame_resize = frame #cv2.resize(frame, (int(self.width/2),int(self.height/2)))
             
             if counter == index_test:
                 counter = 1
@@ -473,79 +471,79 @@ class Main():
 
         rows = []
         
-
-        
         resim_indir = 0
         for obj_key in self.lucky_flight.detected_objects:
             object_type = self.removeNumbers(obj_key)
-            if print_show:
-                print('object_type',object_type)
-            obj = self.lucky_flight.detected_objects[obj_key]
-
-            if print_show:
-                print('obj',obj)
-            
-            for loc in obj.location:
-
-                resim_indir = resim_indir + 1
-                bbox = loc.bb.get_bbox()
-                #print('bbox',bbox)
-                frame_id = loc.frame.id
-                #print('frame_id',frame_id)
-                range_distance = loc.range_distance_m
-                #print('range_distance',range_distance)
-                image_path = loc.frame.image_path()
-                image_base_name=os.path.basename(loc.frame.image_path())
-                image_path = myPath + "/"+image_base_name
-                #print('image_path',image_path)
-                rows.append([self.lucky_flight_id, object_type, obj_key, frame_id,*bbox, bbox[-1]*bbox[-2], image_path, range_distance])
-
-                (x, y, w, h) = [int(v) for v in bbox]
-
-                center_x = (x + (x+w))/2
-                center_y = (y +(y+h))/2
-                yolo_x = format(center_x/self.width, '.6f')
-                yolo_y = format(center_y/self.height, '.6f')
-
-                yolo_w = format(w/self.width, '.6f')
-                yolo_h = format(h/self.height, '.6f')
-
-                enum_value = ObjectTypes[object_type].value
-                yolo_line = '{0} {1} {2} {3} {4}'.format(enum_value, yolo_x, yolo_y, yolo_w, yolo_h)
-
-                en_kucuk_degerden_buyukmu = True
-
-                if w<= self.kucuk_obje_siniri or h<= self.kucuk_obje_siniri:
-                    en_kucuk_degerden_buyukmu = False
-
-
-                temp_image_path_witout_ext = image_base_name.split(".")[0]
-                txt_path= image_path.split(".")[0]
+            enum_value = ObjectTypes[object_type].value
+            if enum_value==0 or enum_value==1:
+                if print_show:
+                    print('object_type',object_type)
+                obj = self.lucky_flight.detected_objects[obj_key]
 
                 if print_show:
-                    print('image_path:', image_path)
-                    print('1: ',txt_path)
-                txt_path=txt_path+".txt"
-                if os.path.exists(txt_path)==False:
-                    file = open(txt_path, 'w')
-                    file.close()
-
-
-                infile = open(txt_path,'r', encoding='utf-8').readlines()
-                with open(txt_path, 'w', encoding='utf-8') as outfile:
-                    outfile.writelines(infile)
-                    if en_kucuk_degerden_buyukmu:
-                        outfile.writelines(yolo_line+"\n")
-
-
-                img_crop = cv2.imread(image_path)
-                img_crop = img_crop[y:y+h,x:x+w]
-                if en_kucuk_degerden_buyukmu:
-                    self.siameseDataset(object_type,obj_key,img_crop,temp_image_path_witout_ext)
+                    print('obj',obj)
                 
+                for loc in obj.location:
 
-                if print_show:
-                    print('--------------------------')
+                    resim_indir = resim_indir + 1
+                    bbox = loc.bb.get_bbox()
+                    #print('bbox',bbox)
+                    frame_id = loc.frame.id
+                    #print('frame_id',frame_id)
+                    range_distance = loc.range_distance_m
+                    #print('range_distance',range_distance)
+                    image_path = loc.frame.image_path()
+                    image_base_name=os.path.basename(loc.frame.image_path())
+                    image_path = myPath + "/"+image_base_name
+                    #print('image_path',image_path)
+                    rows.append([self.lucky_flight_id, object_type, obj_key, frame_id,*bbox, bbox[-1]*bbox[-2], image_path, range_distance])
+
+                    (x, y, w, h) = [int(v) for v in bbox]
+
+                    center_x = (x + (x+w))/2
+                    center_y = (y +(y+h))/2
+                    yolo_x = format(center_x/self.width, '.6f')
+                    yolo_y = format(center_y/self.height, '.6f')
+
+                    yolo_w = format(w/self.width, '.6f')
+                    yolo_h = format(h/self.height, '.6f')
+
+                
+                    yolo_line = '{0} {1} {2} {3} {4}'.format(enum_value, yolo_x, yolo_y, yolo_w, yolo_h)
+
+                    en_kucuk_degerden_buyukmu = True
+
+                    if w<= self.kucuk_obje_siniri or h<= self.kucuk_obje_siniri:
+                        en_kucuk_degerden_buyukmu = False
+
+
+                    temp_image_path_witout_ext = image_base_name.split(".")[0]
+                    txt_path= image_path.split(".")[0]
+
+                    if print_show:
+                        print('image_path:', image_path)
+                        print('1: ',txt_path)
+                    txt_path=txt_path+".txt"
+                    if os.path.exists(txt_path)==False:
+                        file = open(txt_path, 'w')
+                        file.close()
+
+
+                    infile = open(txt_path,'r', encoding='utf-8').readlines()
+                    with open(txt_path, 'w', encoding='utf-8') as outfile:
+                        outfile.writelines(infile)
+                        if en_kucuk_degerden_buyukmu:
+                            outfile.writelines(yolo_line+"\n")
+
+
+                    img_crop = cv2.imread(image_path)
+                    img_crop = img_crop[y:y+h,x:x+w]
+                    if en_kucuk_degerden_buyukmu:
+                        self.siameseDataset(object_type,obj_key,img_crop,temp_image_path_witout_ext)
+                    
+
+                    if print_show:
+                        print('--------------------------')
 
 
 
