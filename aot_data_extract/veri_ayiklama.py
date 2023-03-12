@@ -34,7 +34,8 @@ class Main():
             os.mkdir(self.video_out_path)
 
         # part1 ve images path yolu
-        self.part1_path = 'E:/Datasets/AmazonAirPrime'+'/airborne-detection-starter-kit/data/part1/'
+
+        self.part1_path = 'D:/'+'/airborne-detection-starter-kit/data/part1/'
         self.images_path = self.part1_path+'Images'
 
         # Klasördeki klasörlerin listesi
@@ -82,10 +83,10 @@ class Main():
 
 
         self.height, self.width = 2048 , 2448 # 640 * 640 height 3 width 4 küçülüyor
-        self.kucuk_obje_siniri = 5 # sinir ağına orjinalde 16*16 lıklar kabuldur, boyut 4/1 kuculebılır 
+        self.kucuk_obje_siniri = 0 # sinir ağına orjinalde 16*16 lıklar kabuldur, boyut 4/1 kuculebılır 
         self.fps = 10
 
-        self.kac_kere_calissin = 50
+        self.kac_kere_calissin = 1
 
 
     def run(self):
