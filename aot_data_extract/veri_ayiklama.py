@@ -172,17 +172,17 @@ class Main():
 
             rows_for_dnn = self.yoloTxtPreSiamese()
 
-            toplam_frame, background_sayisi= self.yoloDatasetPreVideo(hangi_frameleri_alayim)
+            toplam_frame,aldigimiz_background_sayisi, toplam_background_sayisi= self.yoloDatasetPreVideo(hangi_frameleri_alayim)
 
-            #dnn
+            #dnn  
             self.dnnDataset(rows_for_dnn)
 
             #dataframe kaydet
 
             self.ana_train_islemis_dataframe = self.ana_train_islemis_dataframe.append({'flight_id': str(self.lucky_flight_id),
                                                                         'toplam_frame': str(toplam_frame),
-                                                                        'aldigimiz_background_sayisi': str(len(hangi_frameleri_alayim)),
-                                                                        'toplam_background_sayisi': str(background_sayisi),
+                                                                        'aldigimiz_background_sayisi': str(len(aldigimiz_background_sayisi)),
+                                                                        'toplam_background_sayisi': str(toplam_background_sayisi),
                                                                         'all_objects': str(str(set(all_keys_not_remove)))}, 
                                                                         ignore_index=True, verify_integrity=False,
                                                                                 sort=False)
@@ -388,8 +388,9 @@ class Main():
         split_percentage_valid = 20
 
         counter = 1
-        background_sayisi=0
+        toplam_background_sayisi=0
         toplam_frame=0
+        aldigimiz_background_sayisi = 0
         index_test = round(100 / split_percentage_valid)
         #black_img = np.zeros((self.height,self.width,3), dtype = np.uint8)
         for png_file in glob.iglob(os.path.join(current_dir, '*.png')):
@@ -423,10 +424,11 @@ class Main():
                     
                 except:
                     #print("txt yok olabılır"+ext,title,ext)
-                    background_sayisi = background_sayisi +1
+                    toplam_background_sayisi = toplam_background_sayisi +1
                     if back_icin in hangi_frameleri_alayim:
                         self.goruntuyuTasiVeyaOlcekliKopyala(png_file, val_images_yolo_output_dir, frame_resize, title)
                         print("val a back koydum",toplam_frame," back_icin",back_icin)
+                        aldigimiz_background_sayisi=aldigimiz_background_sayisi+1
                     else:
                         pass
                         #shutil.move(png_file, background_yolo_output_dir)
@@ -436,10 +438,11 @@ class Main():
                     self.goruntuyuTasiVeyaOlcekliKopyala(png_file, train_images_yolo_output_dir, frame_resize, title)
                 except:
                     #print("txt yok olabılır"+ext,title,ext)
-                    background_sayisi = background_sayisi +1
+                    toplam_background_sayisi = toplam_background_sayisi +1
                     if back_icin in hangi_frameleri_alayim:
                         self.goruntuyuTasiVeyaOlcekliKopyala(png_file, train_images_yolo_output_dir, frame_resize, title)
                         print("traine a background koydum",toplam_frame," back_icin",back_icin)
+                        aldigimiz_background_sayisi=aldigimiz_background_sayisi+1
                     else:
                         pass
                         #shutil.move(png_file, background_yolo_output_dir)
@@ -450,8 +453,9 @@ class Main():
             #cv2.imwrite(png_file, black_img)
 
         print('hangi_frameleri_alayimsayisi',str(hangi_frameleri_alayim))
-        print('background_sayisi_sayisi',background_sayisi)
-        return toplam_frame, background_sayisi
+        print('toplam_background_sayisi',toplam_background_sayisi)
+        print('toplam_frame',toplam_frame)
+        return toplam_frame, aldigimiz_background_sayisi, toplam_background_sayisi
             
     def yoloTxtPreSiamese(self,):
 
