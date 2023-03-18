@@ -39,6 +39,7 @@ class Main():
         self.images_path = self.part1_path+'Images'
 
         # Klasördeki klasörlerin listesi
+        #self.folders = [f for f in os.listdir(self.images_path) if os.path.isdir(os.path.join(self.images_path, f)) and len(os.listdir(os.path.join(self.images_path, f))) > 0]
         self.folders = [f for f in os.listdir(self.images_path) if os.path.isdir(os.path.join(self.images_path, f))]
 
         #aws deki url ve yer
@@ -84,7 +85,7 @@ class Main():
         self.kucuk_obje_siniri = 0 # sinir ağına orjinalde 16*16 lıklar kabuldur, boyut 4/1 kuculebılır 
         self.fps = 10
 
-        self.kac_kere_calissin = 50
+        self.kac_kere_calissin = 97
 
 
     def run(self):
@@ -118,6 +119,14 @@ class Main():
             except:
                 self.ucusBulunamadi()
                 continue
+
+            try:
+                len(os.listdir(os.path.join(self.images_path, lucky_flight_folder))) > 0
+            except:
+                self.klasorBos()
+                continue
+
+
 
             kactayiz = kactayiz+1
 
@@ -172,6 +181,11 @@ class Main():
 
             rows_for_dnn = self.yoloTxtPreSiamese()
 
+            if rows_for_dnn==None:
+                kactayiz = kactayiz-1
+                self.klasorBos()
+                continue
+
             toplam_frame,aldigimiz_background_sayisi, toplam_background_sayisi= self.yoloDatasetPreVideo(hangi_frameleri_alayim)
 
             #dnn  
@@ -181,7 +195,7 @@ class Main():
 
             self.ana_train_islemis_dataframe = self.ana_train_islemis_dataframe.append({'flight_id': str(self.lucky_flight_id),
                                                                         'toplam_frame': str(toplam_frame),
-                                                                        'aldigimiz_background_sayisi': str(len(aldigimiz_background_sayisi)),
+                                                                        'aldigimiz_background_sayisi': str(aldigimiz_background_sayisi),
                                                                         'toplam_background_sayisi': str(toplam_background_sayisi),
                                                                         'all_objects': str(str(set(all_keys_not_remove)))}, 
                                                                         ignore_index=True, verify_integrity=False,
@@ -192,6 +206,20 @@ class Main():
             self.ana_train_islemis_dataframe.to_csv(self.path_ana_train_islemis_dataframe, index=False)
 
             
+
+    def klasorBos(self,):
+        print("ucus klasorBos: ",self.lucky_flight_id)
+
+        toplam_frame = "bozuk"
+
+        self.ana_test_background_islemis_dataframe = self.ana_test_background_islemis_dataframe.append({'flight_id': str(self.lucky_flight_id),
+                                                                        'toplam_frame': toplam_frame},
+                                                                        ignore_index=True, verify_integrity=False,
+                                                                                sort=False)
+
+
+        
+        self.ana_test_background_islemis_dataframe.to_csv(self.path_ana_test_background_islemis_dataframe, index=False)
 
     def ucusBulunamadi(self,):
 
@@ -413,7 +441,7 @@ class Main():
                 print("try-catch save_vision_frame_save")
                 pass
         
-            frame_resize = frame #cv2.resize(frame, (int(self.width/2),int(self.height/2)))
+            frame_resize = cv2.resize(frame, (int(self.width/2),int(self.height/2)))
             
             if counter == index_test:
                 counter = 1
@@ -529,8 +557,11 @@ class Main():
                         print('1: ',txt_path)
                     txt_path=txt_path+".txt"
                     if os.path.exists(txt_path)==False:
-                        file = open(txt_path, 'w')
-                        file.close()
+                        try:
+                            file = open(txt_path, 'w')
+                            file.close()
+                        except:
+                            return None
 
 
                     infile = open(txt_path,'r', encoding='utf-8').readlines()
