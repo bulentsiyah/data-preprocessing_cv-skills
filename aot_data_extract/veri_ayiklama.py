@@ -85,7 +85,9 @@ class Main():
         self.kucuk_obje_siniri = 0 # sinir ağına orjinalde 16*16 lıklar kabuldur, boyut 4/1 kuculebılır 
         self.fps = 10
 
-        self.kac_kere_calissin = 97
+        self.kac_kere_calissin = 300
+
+        self.dataset_extract_with_yolo = False
 
 
     def run(self):
@@ -117,7 +119,8 @@ class Main():
             try:
                 self.lucky_flight = self.dataset.get_flight_by_id(self.lucky_flight_id)
             except:
-                self.ucusBulunamadi()
+                if self.dataset_extract_with_yolo:
+                    self.ucusBulunamadi()
                 continue
 
             try:
@@ -126,42 +129,43 @@ class Main():
                 self.klasorBos()
                 continue
 
-
-
-            kactayiz = kactayiz+1
-
-            if kactayiz>self.kac_kere_calissin:
+            if kactayiz>=self.kac_kere_calissin:
                 print("{}'de break durdurdu: ".format(kactayiz))
                 break
 
+            kactayiz = kactayiz+1
+
             print("üzerine çalışılıyor: ",self.lucky_flight_id, " -----> kactayiz: ", kactayiz)
 
-            temp_kac_object_var = 0
-            temp_kac_framede_obje_var = 0
-            temp_nesnenin_basladigi_yerler = []
-            temp_nesnenin_bittigi_yerler = []
-            for i in range (0,len(self.lucky_flight.valid_encounter)):
-                temp_kac_object_var = temp_kac_object_var +1
-                valid = self.lucky_flight.valid_encounter[i]
-                temp_nesnenin_basladigi_yerler.append(valid['framemin'])
-                temp_nesnenin_bittigi_yerler.append(valid['framemax'])
-                temp_kac_framede_obje_var=temp_kac_framede_obje_var+valid['framecount']
 
-            temp_kac_tane_background_lazim = temp_kac_framede_obje_var / 10 # 97 ise 10 tane-2.örnek ise 10 
-
-            temp_kac_bas_var_kac_son_var = len(temp_nesnenin_basladigi_yerler)  + len(temp_nesnenin_bittigi_yerler) #2 dır-2.ornek ıcın 4 tur
-            temp_kelle_basi_kac_resim = int(temp_kac_tane_background_lazim /temp_kac_bas_var_kac_son_var)
             hangi_frameleri_alayim = []
+            if self.dataset_extract_with_yolo:
+                temp_kac_object_var = 0
+                temp_kac_framede_obje_var = 0
+                temp_nesnenin_basladigi_yerler = []
+                temp_nesnenin_bittigi_yerler = []
+                for i in range (0,len(self.lucky_flight.valid_encounter)):
+                    temp_kac_object_var = temp_kac_object_var +1
+                    valid = self.lucky_flight.valid_encounter[i]
+                    temp_nesnenin_basladigi_yerler.append(valid['framemin'])
+                    temp_nesnenin_bittigi_yerler.append(valid['framemax'])
+                    temp_kac_framede_obje_var=temp_kac_framede_obje_var+valid['framecount']
 
-            for i in range (0,len(temp_nesnenin_basladigi_yerler)): 
-                bulundugu_ilk_yer = temp_nesnenin_basladigi_yerler[i]  #229 --- varsa kus 100 --228-227-226-225
-                for j in range(temp_kelle_basi_kac_resim,0,-1):
-                    hangi_frameleri_alayim.append(bulundugu_ilk_yer -j) 
+                temp_kac_tane_background_lazim = temp_kac_framede_obje_var / 10 # 97 ise 10 tane-2.örnek ise 10 
 
-            for i in range (0,len(temp_nesnenin_bittigi_yerler)): 
-                bulundugu_ilk_yer = temp_nesnenin_bittigi_yerler[i]  #325 --- varsa kus 350
-                for j in range(0,temp_kelle_basi_kac_resim):
-                    hangi_frameleri_alayim.append(bulundugu_ilk_yer +j+1) 
+                temp_kac_bas_var_kac_son_var = len(temp_nesnenin_basladigi_yerler)  + len(temp_nesnenin_bittigi_yerler) #2 dır-2.ornek ıcın 4 tur
+                temp_kelle_basi_kac_resim = int(temp_kac_tane_background_lazim /temp_kac_bas_var_kac_son_var)
+                
+
+                for i in range (0,len(temp_nesnenin_basladigi_yerler)): 
+                    bulundugu_ilk_yer = temp_nesnenin_basladigi_yerler[i]  #229 --- varsa kus 100 --228-227-226-225
+                    for j in range(temp_kelle_basi_kac_resim,0,-1):
+                        hangi_frameleri_alayim.append(bulundugu_ilk_yer -j) 
+
+                for i in range (0,len(temp_nesnenin_bittigi_yerler)): 
+                    bulundugu_ilk_yer = temp_nesnenin_bittigi_yerler[i]  #325 --- varsa kus 350
+                    for j in range(0,temp_kelle_basi_kac_resim):
+                        hangi_frameleri_alayim.append(bulundugu_ilk_yer +j+1) 
 
 
 
@@ -186,24 +190,27 @@ class Main():
                 self.klasorBos()
                 continue
 
-            toplam_frame,aldigimiz_background_sayisi, toplam_background_sayisi= self.yoloDatasetPreVideo(hangi_frameleri_alayim)
+
+            if self.dataset_extract_with_yolo:
+                toplam_frame,aldigimiz_background_sayisi, toplam_background_sayisi= self.yoloDatasetPreVideo(hangi_frameleri_alayim)
 
             #dnn  
             self.dnnDataset(rows_for_dnn)
 
             #dataframe kaydet
 
-            self.ana_train_islemis_dataframe = self.ana_train_islemis_dataframe.append({'flight_id': str(self.lucky_flight_id),
-                                                                        'toplam_frame': str(toplam_frame),
-                                                                        'aldigimiz_background_sayisi': str(aldigimiz_background_sayisi),
-                                                                        'toplam_background_sayisi': str(toplam_background_sayisi),
-                                                                        'all_objects': str(str(set(all_keys_not_remove)))}, 
-                                                                        ignore_index=True, verify_integrity=False,
-                                                                                sort=False)
+            if self.dataset_extract_with_yolo:
+                self.ana_train_islemis_dataframe = self.ana_train_islemis_dataframe.append({'flight_id': str(self.lucky_flight_id),
+                                                                            'toplam_frame': str(toplam_frame),
+                                                                            'aldigimiz_background_sayisi': str(aldigimiz_background_sayisi),
+                                                                            'toplam_background_sayisi': str(toplam_background_sayisi),
+                                                                            'all_objects': str(str(set(all_keys_not_remove)))}, 
+                                                                            ignore_index=True, verify_integrity=False,
+                                                                                    sort=False)
 
 
-        
-            self.ana_train_islemis_dataframe.to_csv(self.path_ana_train_islemis_dataframe, index=False)
+            
+                self.ana_train_islemis_dataframe.to_csv(self.path_ana_train_islemis_dataframe, index=False)
 
             
 
@@ -552,23 +559,25 @@ class Main():
                     temp_image_path_witout_ext = image_base_name.split(".")[0]
                     txt_path= image_path.split(".")[0]
 
-                    if print_show:
-                        print('image_path:', image_path)
-                        print('1: ',txt_path)
-                    txt_path=txt_path+".txt"
-                    if os.path.exists(txt_path)==False:
-                        try:
-                            file = open(txt_path, 'w')
-                            file.close()
-                        except:
-                            return None
 
+                    if self.dataset_extract_with_yolo:
+                        if print_show:
+                            print('image_path:', image_path)
+                            print('1: ',txt_path)
+                        txt_path=txt_path+".txt"
+                        if os.path.exists(txt_path)==False:
+                            try:
+                                file = open(txt_path, 'w')
+                                file.close()
+                            except:
+                                return None
 
-                    infile = open(txt_path,'r', encoding='utf-8').readlines()
-                    with open(txt_path, 'w', encoding='utf-8') as outfile:
-                        outfile.writelines(infile)
-                        if en_kucuk_degerden_buyukmu:
-                            outfile.writelines(yolo_line+"\n")
+                    
+                        infile = open(txt_path,'r', encoding='utf-8').readlines()
+                        with open(txt_path, 'w', encoding='utf-8') as outfile:
+                            outfile.writelines(infile)
+                            if en_kucuk_degerden_buyukmu:
+                                outfile.writelines(yolo_line+"\n")
 
 
                     img_crop = cv2.imread(image_path)
