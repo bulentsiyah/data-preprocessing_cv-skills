@@ -49,7 +49,7 @@ class Main():
         self.yolo_output_dir = os.path.join(mantis_anapath, "yolo_dataset/" )
 
         #dnn pathleri
-        self.dnn_output_dir = os.path.join(mantis_anapath, "dnn_dataset/" )
+        self.dnn_output_dir = os.path.join(mantis_anapath, "dnn_dataset/pure/" )
 
         #siamese pathleri
         self.siamese_output_dir = os.path.join(mantis_anapath, "siamese_dataset/" )
